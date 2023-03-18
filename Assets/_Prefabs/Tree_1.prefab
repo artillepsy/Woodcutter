@@ -68,7 +68,7 @@ MonoBehaviour:
   <Type>k__BackingField: 0
   <Health>k__BackingField: {fileID: 6797607749887269844}
   <LootThrower>k__BackingField: {fileID: 8246736588918049174}
-  anim: {fileID: 1417510314537473915}
+  animationPlayer: {fileID: 1417510314537473915}
 --- !u!114 &1417510314537473915
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81,6 +81,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60823c87e24f2384085ea969c5fc1770, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  meshHolder: {fileID: 4186177324913457361}
+  flyDownTime: 1
+  rotateDegrees: 70
 --- !u!114 &6797607749887269844
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106,7 +109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64b39504678d4094aa83591646b0dcec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <WoodCount>k__BackingField: 2
+  <WoodCount>k__BackingField: 3
 --- !u!136 &97076197429023398
 CapsuleCollider:
   m_ObjectHideFlags: 0

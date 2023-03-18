@@ -7,19 +7,23 @@ namespace Assets.Scripts.Trees
     public class TreeHealth : MonoBehaviour
     {
         [field: SerializeField] public int MaxHealth { get; set; } = 4;
-        private Tree _thisTree;
+        private TreeObject _thisTree;
         public int HealthPoints { get; set; }
+        public Vector3 PlayerKickPos { get; private set; }
 
-        private void Awake() => _thisTree = GetComponent<Tree>();
+        private void Awake() => _thisTree = GetComponent<TreeObject>();
 
         public void ResetHealth() => HealthPoints = MaxHealth;
 
-        public void TakeDamage(int damagePoints)
+        public void TakeDamage(int damagePoints, Vector3 playerPos)
         {
             HealthPoints -= damagePoints;
+            PlayerKickPos = playerPos;
+            Debug.Log($"take damage func, health: {HealthPoints}");
             
             if (HealthPoints > 0)
             {
+                EventMaster.PushEvent(EventStrings.TREE_KICKED);
                 return;
             }
 

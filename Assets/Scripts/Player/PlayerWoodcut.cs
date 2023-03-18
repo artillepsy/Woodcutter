@@ -29,13 +29,13 @@ namespace Assets.Scripts.Player
 
         private void OnEnable()
         {
-            EventMaster.AddListener(EventStrings.TREE_CUTTED, CheckTreeCountInRadius);
+            EventMaster.AddListener(EventStrings.TREE_CUTTED, () => SetCutPropertyBoolean(false));
             EventMaster.AddListener<int>(EventStrings.LEVEL_UP, UpdateKickPoints);
         }
 
         private void OnDisable()
         {
-            EventMaster.RemoveListener(EventStrings.TREE_CUTTED, CheckTreeCountInRadius);
+            EventMaster.RemoveListener(EventStrings.TREE_CUTTED, () => SetCutPropertyBoolean(false));
             EventMaster.RemoveListener<int>(EventStrings.LEVEL_UP, UpdateKickPoints);
         }
 
@@ -55,14 +55,6 @@ namespace Assets.Scripts.Player
         private void UpdateKickPoints(int level)
         {
             _kickPoints = LevelSettings.Inst.PlayerStatsSettings.GetPointsForLevel(level);
-        }
-
-        private void CheckTreeCountInRadius()
-        {
-            if (_treeSearcher.TreeCount == 0)
-            {
-                SetCutPropertyBoolean(false);
-            }
         }
 
         private void SetCutPropertyBoolean(bool status)
@@ -91,8 +83,7 @@ namespace Assets.Scripts.Player
             }
             _timeSinceLastKick = 0f;
             var tree = _treeSearcher.GetNearestAvailableTree();
-            tree.Health.TakeDamage(_kickPoints);
-            EventMaster.PushEvent(EventStrings.TREE_KICKED);
+            tree.Health.TakeDamage(_kickPoints, transform.position);
         }
 
         private void OnDrawGizmosSelected()

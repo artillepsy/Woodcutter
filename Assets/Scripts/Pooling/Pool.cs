@@ -52,7 +52,7 @@ namespace Assets.Scripts.Pooling
 
         private List<PoolableMonoBehaviour> GetPrefabsFromFolder()
         {
-            var guids = AssetDatabase.FindAssets("t:Prefab", new[] { "Assets/Prefabs" });
+            var guids = AssetDatabase.FindAssets("t:Prefab", new[] { "Assets/_Prefabs" });
             var prefabs = new List<PoolableMonoBehaviour>();
 
             foreach (var guid in guids)

@@ -1,15 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using Assets.Scripts.Core;
+using System.Collections.Generic;
 using UnityEngine;
-using Tree = Assets.Scripts.Trees.Tree;
+using TreeObject = Assets.Scripts.Trees.TreeObject;
 
 namespace Assets.Scripts.Player
 {
     public class PlayerTreeSearcher : MonoBehaviour
     {
-        private List<Tree> _treesInRadius = new List<Tree>();
+        private List<TreeObject> _treesInRadius = new List<TreeObject>();
         public int TreeCount => _treesInRadius.Count;
 
-        public Tree GetNearestAvailableTree()
+        private void OnEnable()
+        {
+            EventMaster.AddListener<TreeObject>(EventStrings.TREE_CUTTED, RemoveTreeFromList);
+        }
+
+        private void OnDisable()
+        {
+            EventMaster.RemoveListener<TreeObject>(EventStrings.TREE_CUTTED, RemoveTreeFromList);
+        }
+
+        public TreeObject GetNearestAvailableTree()
         {
             if (TreeCount == 0)
             {
@@ -22,7 +33,7 @@ namespace Assets.Scripts.Player
             }
 
             var minDistance = float.MaxValue;
-            Tree nearestTree = _treesInRadius[0]; 
+            TreeObject nearestTree = _treesInRadius[0]; 
 
             foreach(var tree in _treesInRadius)
             {
@@ -40,10 +51,16 @@ namespace Assets.Scripts.Player
             return nearestTree;
         }
 
-
+        private void RemoveTreeFromList(TreeObject tree)
+        {
+            if (_treesInRadius.Contains(tree))
+            {
+                _treesInRadius.Remove(tree);
+            }
+        }
         private void OnTriggerEnter(Collider other)
         {
-            var treeComponent = other.GetComponentInParent<Tree>();
+            var treeComponent = other.GetComponentInParent<TreeObject>();
 
             if (!treeComponent)
             {
@@ -59,7 +76,7 @@ namespace Assets.Scripts.Player
 
         private void OnTriggerExit(Collider other)
         {
-            var treeComponent = other.GetComponentInParent<Tree>();
+            var treeComponent = other.GetComponentInParent<TreeObject>();
 
             if (!treeComponent)
             {

@@ -1,4 +1,4 @@
-﻿using Tree = Assets.Scripts.Trees.Tree;
+﻿using TreeObject = Assets.Scripts.Trees.TreeObject;
 using Random = UnityEngine.Random;
 using System;
 using UnityEngine;
@@ -9,7 +9,7 @@ namespace Assets.Scripts.Settings
     [Serializable]
     public class TreeStatsBinding
     {
-        public Tree Prefab;
+        public TreeObject Prefab;
         [Min(1)] public int HealthPoints = 10;
         [Min(1)] public int LootCount = 10;
         [Range(0, 1)] public float SpawnProbability = 0.5f;
@@ -20,7 +20,7 @@ namespace Assets.Scripts.Settings
             Prefab.LootThrower.WoodCount = LootCount;
         }
 
-        public static Tree GetPrefabByProb(List<TreeStatsBinding> prefabs)
+        public static TreeObject GetPrefabByProb(List<TreeStatsBinding> prefabs)
         {
             var total = 0f;
 

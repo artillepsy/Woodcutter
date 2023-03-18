@@ -1,4 +1,4 @@
-﻿using Tree = Assets.Scripts.Trees.Tree;
+﻿using TreeObject = Assets.Scripts.Trees.TreeObject;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -61,7 +61,7 @@ namespace Assets.Scripts.Settings
             treePrefabsBindings.ForEach(b => b.InitValues());
         }
 
-        public Tree GetRandomPrefab()
+        public TreeObject GetRandomPrefab()
         {
             return TreeStatsBinding.GetPrefabByProb(treePrefabsBindings);
         }
