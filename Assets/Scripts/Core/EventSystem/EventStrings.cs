@@ -16,6 +16,7 @@
 
         // анимации
         public const string CUT_PROPERTY_CHANGED = "AnimatorCutPropertyChanged";
+        public const string START_KICK = "StartKick";
 
         // манипуляции с растительностью
         public const string TREE_CUTTED = "TreeCutted";

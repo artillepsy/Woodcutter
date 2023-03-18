@@ -6,11 +6,14 @@ namespace Assets.Scripts.Player
 {
     public class PlayerWoodcut : MonoBehaviour
     {
+        [SerializeField, Range(0, 1)] private float damageTimeValueAtInterval = 0.5f;
         private PlayerTreeSearcher _treeSearcher;
         private Rigidbody _rb;
         private bool _isCutting = false;
-        private float _timeBetweenKicks;
-        private float _timeSinceLastKick;
+        private float _timeSinceLastTick;
+        private float _tickTime;
+        private bool _damagedAtThisInterval = false;
+        private bool _kickEventWasPushed = false;
         private int _kickPoints;
         // таймер сбрасывается при каждом движении игрока
 
@@ -22,7 +25,7 @@ namespace Assets.Scripts.Player
 
         private void Start()
         {
-            _timeBetweenKicks = LevelSettings.Inst.PlayerStatsSettings.TimeBetweenKiks;
+            _tickTime = LevelSettings.Inst.PlayerStatsSettings.TimeBetweenKiks;
         }
 
         private void OnEnable()
@@ -47,7 +50,7 @@ namespace Assets.Scripts.Player
             {
                 SetCutPropertyBoolean(false);
             }
-            UpdateKickTimer();
+            UpdateTickTimer();
         }
 
         private void UpdateKickPoints(int level)
@@ -58,36 +61,47 @@ namespace Assets.Scripts.Player
         private void SetCutPropertyBoolean(bool status)
         {
             _isCutting = status;
-            EventMaster.PushEvent(EventStrings.CUT_PROPERTY_CHANGED, status);
+            _timeSinceLastTick = 0f;
+            _damagedAtThisInterval = false;
+            _kickEventWasPushed = false;
 
-            if (!_isCutting)
-            {
-                _timeSinceLastKick = 0f;
-            }
+            EventMaster.PushEvent(EventStrings.CUT_PROPERTY_CHANGED, status);
         }
 
-        private void UpdateKickTimer()
+        private void UpdateTickTimer()
         {
             if (!_isCutting)
             {
                 return;
             }
-
-            _timeSinceLastKick += Time.deltaTime;
-
-            if (_timeSinceLastKick < _timeBetweenKicks)
-            {
-                return;
-            }
-            _timeSinceLastKick = 0f;
             var tree = _treeSearcher.NearestTree;
             
-            if (!tree || !tree.Health.Active)
+            if (!tree)
             {
                 return;
             }
+            if (!_kickEventWasPushed)
+            {
+                EventMaster.PushEvent(EventStrings.START_KICK);
+                _kickEventWasPushed = true;
+            }
 
-            tree.Health.TakeDamage(_kickPoints, transform.position);
+            _timeSinceLastTick += Time.deltaTime;
+
+            if (_timeSinceLastTick >= damageTimeValueAtInterval && !_damagedAtThisInterval)
+            {
+                tree.Health.TakeDamage(_kickPoints, transform.position);
+                _damagedAtThisInterval = true;
+                return;
+            }
+
+            if (_timeSinceLastTick < _tickTime)
+            {
+                return;
+            }
+            _timeSinceLastTick = 0f;
+            _damagedAtThisInterval = false;
+            _kickEventWasPushed = false;
         }
     }
 }

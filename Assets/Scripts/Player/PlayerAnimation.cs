@@ -16,13 +16,13 @@ namespace Assets.Scripts.Player
 
         private void OnEnable()
         {
-            EventMaster.AddListener(EventStrings.TREE_KICKED, SetKickTrigger);
+            EventMaster.AddListener(EventStrings.START_KICK, SetKickTrigger);
             EventMaster.AddListener<bool>(EventStrings.CUT_PROPERTY_CHANGED, SetCuttingBoolean);
         }
 
         private void OnDisable()
         {
-            EventMaster.RemoveListener(EventStrings.TREE_KICKED, SetKickTrigger);
+            EventMaster.RemoveListener(EventStrings.START_KICK, SetKickTrigger);
             EventMaster.RemoveListener<bool>(EventStrings.CUT_PROPERTY_CHANGED, SetCuttingBoolean);
 
         }

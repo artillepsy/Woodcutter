@@ -21,6 +21,6 @@ MonoBehaviour:
   treePrefabsBindings:
   - Prefab: {fileID: 8755911986394920545, guid: cafb72732116a184bb5ed9b103ca0b23,
       type: 3}
-    HealthPoints: 10
+    HealthPoints: 3
     LootCount: 3
     SpawnProbability: 0.244
