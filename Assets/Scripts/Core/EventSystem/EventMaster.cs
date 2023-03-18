@@ -171,7 +171,7 @@ namespace Assets.Scripts.Core
 
             foreach(var handler in _listeners[eventName])
             {
-                if (handler.Method.Equals(handlerToRemove.Method))
+                if (handler.Target != handlerToRemove.Target)
                 {
                     continue;
                 }
@@ -200,7 +200,7 @@ namespace Assets.Scripts.Core
 
             foreach (var handler in _listeners[eventName])
             {
-                if (handler.Method.Equals(handlerToRemove.Method))
+                if (handler.Target != handlerToRemove.Target)
                 {
                     continue;
                 }

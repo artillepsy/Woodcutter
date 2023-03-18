@@ -14,12 +14,10 @@ namespace Assets.Scripts.Player
         private void Awake()
         {
             _treeSearcher = GetComponent<PlayerTreeSearcher>();
-            Debug.Log("Awake");
         }
 
         private void OnEnable()
         {
-            Debug.Log("OnEnable");
             EventMaster.AddListener<bool>(EventStrings.CUT_PROPERTY_CHANGED, SetCuttingBoolean);
         }
 
@@ -35,7 +33,7 @@ namespace Assets.Scripts.Player
             if (status)
             {
                 _isRotating = true;
-                _currentTreePos = _treeSearcher.GetNearestAvailableTree().transform.position;
+                _currentTreePos = _treeSearcher.NearestTree.transform.position;
             }
         }
 

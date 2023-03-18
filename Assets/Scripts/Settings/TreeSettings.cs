@@ -13,18 +13,18 @@ namespace Assets.Scripts.Settings
         [SerializeField] private int MaxSpawnCount = 10;
 
         // время, через которое дерево снова прорастёт
-        [SerializeField, Space, Min(0)] private int MinGrowTime = 20;
-        [SerializeField, Space] private int MaxGrowTime = 30;
+        [SerializeField, Space, Min(0)] private float MinGrowTime = 20;
+        [SerializeField, Space] private float MaxGrowTime = 30;
 
         // стартовая задержка роста деревьев для красивого хаотичного появления на карте
-        [SerializeField, Space, Min(0)] private int MinStartDelayGrowTime = 4;
-        [SerializeField, Space] private int MaxStartDelayGrowTime = 30;
+        [SerializeField, Space, Min(0)] private float MinStartDelayGrowTime = 4;
+        [SerializeField, Space] private float MaxStartDelayGrowTime = 30;
 
         [SerializeField, Space] private List<TreeStatsBinding> treePrefabsBindings; 
 
         public int RandomSpawnCount => Random.Range(MinSpawnCount, MaxSpawnCount);
-        public int RandomGrowTime => Random.Range(MinGrowTime, MaxGrowTime);
-        public int RandomStartDelayGrowTime => Random.Range(MinStartDelayGrowTime, MaxStartDelayGrowTime);
+        public float RandomGrowTime => Random.Range(MinGrowTime, MaxGrowTime);
+        public float RandomGrowDelay => Random.Range(MinStartDelayGrowTime, MaxStartDelayGrowTime);
 
         private void OnValidate()
         {

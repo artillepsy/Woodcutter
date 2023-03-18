@@ -13,6 +13,6 @@ namespace Assets.Scripts.Trees
 
         private void OnDisable() => animationPlayer.ResetValues();
 
-        public void StartGrow(float growTime) => animationPlayer.PlayGrowAnimation(growTime);
+        public void StartGrow(float growDelay) => animationPlayer.PlayGrowAnimation(growDelay);
     }
 }

@@ -1,13 +1,11 @@
 ﻿using Assets.Scripts.Core;
 using Assets.Scripts.Settings;
-using UnityEditor;
 using UnityEngine;
 
 namespace Assets.Scripts.Player
 {
     public class PlayerWoodcut : MonoBehaviour
     {
-        [SerializeField] private Collider searchTrigger;
         private PlayerTreeSearcher _treeSearcher;
         private Rigidbody _rb;
         private bool _isCutting = false;
@@ -41,11 +39,11 @@ namespace Assets.Scripts.Player
 
         private void Update()
         {
-            if (_rb.velocity == Vector3.zero && !_isCutting && _treeSearcher.TreeCount > 0)
+            if (_rb.velocity == Vector3.zero && !_isCutting && _treeSearcher.NearestTree)
             {
                 SetCutPropertyBoolean(true);
             }
-            else if (_rb.velocity != Vector3.zero && _isCutting)
+            else if (_rb.velocity != Vector3.zero && _isCutting || _isCutting && !_treeSearcher.NearestTree)
             {
                 SetCutPropertyBoolean(false);
             }
@@ -82,20 +80,14 @@ namespace Assets.Scripts.Player
                 return;
             }
             _timeSinceLastKick = 0f;
-            var tree = _treeSearcher.GetNearestAvailableTree();
-            tree.Health.TakeDamage(_kickPoints, transform.position);
-        }
-
-        private void OnDrawGizmosSelected()
-        {
-            if (!searchTrigger)
+            var tree = _treeSearcher.NearestTree;
+            
+            if (!tree || !tree.Health.Active)
             {
                 return;
             }
 
-            Handles.color = new Color(1, 0, 0, 0.1f);
-            Handles.DrawSolidDisc(transform.position + Vector3.up * searchTrigger.bounds.center.y,
-                Vector3.up, searchTrigger.bounds.extents.x);
+            tree.Health.TakeDamage(_kickPoints, transform.position);
         }
     }
 }

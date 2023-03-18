@@ -1,4 +1,7 @@
 ﻿using Assets.Scripts.Core;
+using Assets.Scripts.Pooling;
+using Assets.Scripts.Settings;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.Trees
@@ -9,6 +12,49 @@ namespace Assets.Scripts.Trees
 
         [SerializeField, Space] private bool toggleGizmos = true;
         [SerializeField] private float gizmoSphereRadius = 1f;
+
+        private Quaternion RandomRotation => Quaternion.Euler(0, Random.Range(0, 360), 0);
+
+        private void Start()
+        {
+            SpawnTrees();
+        }
+
+        private void SpawnTrees()
+        {
+            var settings = LevelSettings.Inst.TreeSettings;
+            var spawnCount = settings.RandomSpawnCount;
+            var spawnPoints = gridData.GetSpawnPoints();
+
+            for(var i = 0; i < spawnCount; i++)
+            {
+                var spawnPoint = GetSpawnPointWithExclude(spawnPoints);
+                var growDelay = settings.RandomGrowDelay;
+                var randomPrefab = settings.GetRandomPrefab();
+                SpawnTree(spawnPoint, growDelay, randomPrefab);
+            }
+        }
+
+        private void SpawnTree(Vector3 spawnPoint, float growDelay, TreeObject prefab)
+        {
+            var instance = Pool.Get(prefab.ID) as TreeObject;
+            instance.transform.position = spawnPoint;
+            instance.transform.rotation = RandomRotation;
+            instance.StartGrow(growDelay);
+        }
+
+        private Vector3 GetSpawnPointWithExclude(List<Vector3> spawnPoints)
+        {
+            if (spawnPoints.Count == 0)
+            {
+                Debug.LogError("No available points to spawn");
+                return Vector3.zero;
+            }
+            
+            var randomPoint = spawnPoints[Random.Range(0, spawnPoints.Count)];
+            spawnPoints.Remove(randomPoint);
+            return randomPoint;
+        }
 
         private void OnDrawGizmos()
         {

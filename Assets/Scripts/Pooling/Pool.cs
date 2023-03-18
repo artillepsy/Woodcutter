@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -48,6 +49,11 @@ namespace Assets.Scripts.Pooling
             instance.gameObject.SetActive(false);
             _poolInst._activeInstances.Remove(instance);
             _poolInst._inactiveInstances.Add(instance);
+        }
+
+        public static List<PoolableMonoBehaviour> GetActiveByType(PoolableType type)
+        {
+            return _poolInst._activeInstances.Where(inst => inst.Type == type).ToList();
         }
 
         private List<PoolableMonoBehaviour> GetPrefabsFromFolder()

@@ -8,13 +8,21 @@ namespace Assets.Scripts.Trees
     public class TreeAnimation : MonoBehaviour
     {
         [SerializeField] private Transform meshHolder;
-        [SerializeField] private float flyDownTime = 1f;
+        [SerializeField] private Collider treeCollider;
+        [SerializeField] private TreeObject thisTree;
+        [Space]
+        [SerializeField] private float fallDownTime = 1f;
         [SerializeField] private float rotateDegrees = 70f;
-        private TreeObject _thisTree;
+        [SerializeField] private AnimationCurve fallRotationLerpCurve;
+        [Space]
+        [SerializeField] private float growTime = 1f;
+        [SerializeField] private AnimationCurve scaleLerpCurve;
+        private Vector3 _endMeshScale;
 
         private void Awake()
         {
-            _thisTree = GetComponent<TreeObject>();
+            _endMeshScale = meshHolder.localScale;
+            thisTree = GetComponent<TreeObject>();
         }
 
         private void OnEnable()
@@ -29,18 +37,22 @@ namespace Assets.Scripts.Trees
 
         public void ResetValues()
         {
+            treeCollider.enabled = true;
             meshHolder.rotation = Quaternion.identity;
         }
 
-        public void PlayGrowAnimation(float growTime)
+        public void PlayGrowAnimation(float growDelay)
         {
-            StartCoroutine(GrowCo(growTime));
-            Debug.Log("Play grow animation");
+            StartCoroutine(GrowCo(growDelay));
         }
 
         private void StartCutAnimationIfThis(TreeObject instance)
         {
-            if (instance != _thisTree)
+            if (instance != thisTree)
+            {
+                return;
+            }
+            if (!gameObject.activeSelf)
             {
                 return;
             }
@@ -50,29 +62,46 @@ namespace Assets.Scripts.Trees
 
         private IEnumerator FlyDownCo()
         {
-            Debug.Log("FlyDownCO");
-            var playerPos = _thisTree.Health.PlayerKickPos;
-            var fallDirection = (transform.position - playerPos).normalized;
-            // var rotateVector = Quaternion.Euler(0, 90, 0) * fallDirection;
+            treeCollider.enabled = false;
+            var playerPos = thisTree.Health.PlayerKickPos;
+
+            var localUpDirection = (transform.position - playerPos).normalized;
+            var localRightDirection = Quaternion.Euler(0, 90, 0) * localUpDirection;
+            var localForwardDirection = Quaternion.AngleAxis(rotateDegrees, localRightDirection) * localUpDirection;
 
             var startRotation = meshHolder.rotation;
-            var toRotation = Quaternion.LookRotation(Vector3.down, fallDirection);
+            var endRotation = Quaternion.LookRotation(localForwardDirection, localUpDirection);
             var time = 0f;
-            var angleSpeed = rotateDegrees / flyDownTime;
 
-            while (time < flyDownTime)
+            while (time < fallDownTime)
             {
-                meshHolder.rotation = Quaternion.RotateTowards(startRotation, toRotation, angleSpeed * Time.deltaTime);
+                var lerpValue = fallRotationLerpCurve.Evaluate(time / fallDownTime);
+                meshHolder.rotation = Quaternion.Lerp(startRotation, endRotation, lerpValue);
                 time += Time.deltaTime;
                 yield return null;
             }
 
-            Pool.Add(_thisTree);
+            Pool.Add(thisTree);
         }
 
-        private IEnumerator GrowCo(float growTime)
+        private IEnumerator GrowCo(float growDelay)
         {
-            yield return new WaitForSeconds(growTime);
+            var startScale = Vector3.zero;
+            meshHolder.localScale = startScale;
+
+            yield return new WaitForSeconds(growDelay);
+
+            var time = 0f;
+
+            while (time < growTime)
+            {
+                var lerpValue = scaleLerpCurve.Evaluate(time / growTime);
+                meshHolder.localScale = Vector3.Lerp(startScale, _endMeshScale, lerpValue);
+                time += Time.deltaTime;
+                yield return null;
+            }
+
+            meshHolder.localScale = _endMeshScale;
         }
     }
 }

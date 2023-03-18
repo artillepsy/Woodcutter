@@ -16,7 +16,7 @@ namespace Assets.Scripts.Settings
 
         public void InitValues()
         {
-            Prefab.Health.HealthPoints = HealthPoints;
+            Prefab.Health.MaxHealth = HealthPoints;
             Prefab.LootThrower.WoodCount = LootCount;
         }
 

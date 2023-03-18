@@ -52,6 +52,11 @@ namespace Assets.Scripts.Core
         {
             foreach(var obstacle in Obstacles)
             {
+                if (!obstacle)
+                {
+                    continue;
+                }
+
                 if (Vector3.Distance(pos, obstacle.position) <= EmptyCenterRadius)
                 {
                     return true;

@@ -1,43 +1,48 @@
-﻿using Assets.Scripts.Core;
-using System.Collections.Generic;
+﻿using Assets.Scripts.Pooling;
 using UnityEngine;
-using TreeObject = Assets.Scripts.Trees.TreeObject;
+using Assets.Scripts.Trees;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace Assets.Scripts.Player
 {
     public class PlayerTreeSearcher : MonoBehaviour
     {
-        private List<TreeObject> _treesInRadius = new List<TreeObject>();
-        public int TreeCount => _treesInRadius.Count;
+        [SerializeField] private float searchRadius = 3f;
+        public TreeObject NearestTree { get; private set; }
+        private Rigidbody _rb;
 
-        private void OnEnable()
+        private void Awake()
         {
-            EventMaster.AddListener<TreeObject>(EventStrings.TREE_CUTTED, RemoveTreeFromList);
+            _rb = GetComponent<Rigidbody>();
         }
 
-        private void OnDisable()
+        private void Update()
         {
-            EventMaster.RemoveListener<TreeObject>(EventStrings.TREE_CUTTED, RemoveTreeFromList);
+            if (_rb.velocity != Vector3.zero)
+            {
+                return;
+            }
+
+            UpdateTreeInfo();
         }
 
-        public TreeObject GetNearestAvailableTree()
+        private void UpdateTreeInfo()
         {
-            if (TreeCount == 0)
-            {
-                return null;
-            }
+            var minDistance = searchRadius;
+            var trees = Pool.GetActiveByType(PoolableType.Tree);
+            NearestTree = null;
 
-            if (TreeCount == 1)
+            foreach (var tree in trees)
             {
-                return _treesInRadius[0];
-            }
+                if (!(tree as TreeObject).Health.Active)
+                {
+                    continue;
+                }
 
-            var minDistance = float.MaxValue;
-            TreeObject nearestTree = _treesInRadius[0]; 
-
-            foreach(var tree in _treesInRadius)
-            {
-                var currentDistance = (tree.transform.position - transform.position).sqrMagnitude;
+                var currentDistance = (tree.transform.position - transform.position).magnitude;
 
                 if (currentDistance >= minDistance)
                 {
@@ -45,49 +50,17 @@ namespace Assets.Scripts.Player
                 }
 
                 minDistance = currentDistance;
-                nearestTree = tree;
+                NearestTree = tree as TreeObject;
             }
-
-            return nearestTree;
         }
 
-        private void RemoveTreeFromList(TreeObject tree)
+#if UNITY_EDITOR
+        private void OnDrawGizmosSelected()
         {
-            if (_treesInRadius.Contains(tree))
-            {
-                _treesInRadius.Remove(tree);
-            }
+            Handles.color = new Color(1, 0, 0, 0.1f);
+            Handles.DrawSolidDisc(transform.position + Vector3.up * 0.1f, Vector3.up, searchRadius);
         }
-        private void OnTriggerEnter(Collider other)
-        {
-            var treeComponent = other.GetComponentInParent<TreeObject>();
+#endif
 
-            if (!treeComponent)
-            {
-                return;
-            }
-
-            if (!_treesInRadius.Contains(treeComponent))
-            {
-                _treesInRadius.Add(treeComponent);
-                Debug.Log($"Tree added. Count: {TreeCount}");
-            }
-        }
-
-        private void OnTriggerExit(Collider other)
-        {
-            var treeComponent = other.GetComponentInParent<TreeObject>();
-
-            if (!treeComponent)
-            {
-                return;
-            }
-
-            if (_treesInRadius.Contains(treeComponent))
-            {
-                _treesInRadius.Remove(treeComponent);
-                Debug.Log($"Tree removed. Count: {TreeCount}");
-            }
-        }
     }
 }

@@ -6,9 +6,7 @@ namespace Assets.Scripts.Trees
     public class TreeLootThrower : MonoBehaviour
     {
         [field: SerializeField] public int WoodCount { get; set; } = 2;
-        private TreeObject _thisTree;
-
-        private void Awake() => _thisTree = GetComponent<TreeObject>();
+        [SerializeField] private TreeObject thisTree;
 
         private void OnEnable()
         {
@@ -22,11 +20,10 @@ namespace Assets.Scripts.Trees
 
         private void ThrowLootIfThisCutted(TreeObject tree)
         {
-            if (_thisTree != tree)
+            if (thisTree != tree)
             {
                 return;
             }
-            Debug.Log($"Throw {WoodCount} wood");
         }
     }
 }
