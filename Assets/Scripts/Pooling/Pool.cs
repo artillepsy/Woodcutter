@@ -44,6 +44,14 @@ namespace Assets.Scripts.Pooling
             return _poolInst.GetNewInstanceById(id);
         }
 
+        public static PoolableMonoBehaviour GetInstance(PoolableMonoBehaviour instance)
+        {
+            _poolInst._activeInstances.Add(instance);
+            _poolInst._inactiveInstances.Remove(instance);
+            instance.gameObject.SetActive(true);
+            return instance;
+        }
+
         public static void Add(PoolableMonoBehaviour instance)
         {
             instance.gameObject.SetActive(false);
@@ -92,7 +100,7 @@ namespace Assets.Scripts.Pooling
             var instance = Instantiate(GetPrefabById(id));
             instance.transform.SetParent(_parents[instance.Type]);
             _poolInst._activeInstances.Add(instance);
-            //instance.ID = id;
+            instance.ID = id;
             return instance;
         }
 

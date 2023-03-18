@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Core;
 using Assets.Scripts.Pooling;
 using Assets.Scripts.Settings;
+using Assets.Scripts.Stumps;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,6 +15,16 @@ namespace Assets.Scripts.Trees
         [SerializeField] private float gizmoSphereRadius = 1f;
 
         private Quaternion RandomRotation => Quaternion.Euler(0, Random.Range(0, 360), 0);
+
+        private void OnEnable()
+        {
+            EventMaster.AddListener<Stump>(EventStrings.STUMP_GROWED, RespawnTree);
+        }
+
+        private void OnDisable()
+        {
+            EventMaster.RemoveListener<Stump>(EventStrings.STUMP_GROWED, RespawnTree);
+        }
 
         private void Start()
         {
@@ -29,10 +40,19 @@ namespace Assets.Scripts.Trees
             for(var i = 0; i < spawnCount; i++)
             {
                 var spawnPoint = GetSpawnPointWithExclude(spawnPoints);
-                var growDelay = settings.RandomGrowDelay;
+                var growDelay = settings.RandomStartGrowTime;
                 var randomPrefab = settings.GetRandomPrefab();
                 SpawnTree(spawnPoint, growDelay, randomPrefab);
             }
+        }
+
+        private void RespawnTree(Stump stump)
+        {
+            var inst = Pool.Get(stump.TreeID) as TreeObject;
+            inst.transform.position = stump.transform.position;
+            inst.transform.rotation = stump.transform.rotation;
+            inst.gameObject.SetActive(true);
+            inst.StartGrow(0f);
         }
 
         private void SpawnTree(Vector3 spawnPoint, float growDelay, TreeObject prefab)

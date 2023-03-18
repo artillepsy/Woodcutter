@@ -17,14 +17,14 @@ namespace Assets.Scripts.Settings
         [SerializeField, Space] private float MaxGrowTime = 30;
 
         // стартовая задержка роста деревьев для красивого хаотичного появления на карте
-        [SerializeField, Space, Min(0)] private float MinStartDelayGrowTime = 4;
-        [SerializeField, Space] private float MaxStartDelayGrowTime = 30;
+        [SerializeField, Space, Min(0)] private float MinStartGrowTime = 4;
+        [SerializeField, Space] private float MaxStartGrowTime = 30;
 
         [SerializeField, Space] private List<TreeStatsBinding> treePrefabsBindings; 
 
         public int RandomSpawnCount => Random.Range(MinSpawnCount, MaxSpawnCount);
         public float RandomGrowTime => Random.Range(MinGrowTime, MaxGrowTime);
-        public float RandomGrowDelay => Random.Range(MinStartDelayGrowTime, MaxStartDelayGrowTime);
+        public float RandomStartGrowTime => Random.Range(MinStartGrowTime, MaxStartGrowTime);
 
         private void OnValidate()
         {
@@ -46,13 +46,13 @@ namespace Assets.Scripts.Settings
                 MinGrowTime = MaxGrowTime;
             }
 
-            if (MaxStartDelayGrowTime < MinStartDelayGrowTime)
+            if (MaxStartGrowTime < MinStartGrowTime)
             {
-                MaxStartDelayGrowTime = MinStartDelayGrowTime;
+                MaxStartGrowTime = MinStartGrowTime;
             }
-            if (MinStartDelayGrowTime > MaxStartDelayGrowTime)
+            if (MinStartGrowTime > MaxStartGrowTime)
             {
-                MinStartDelayGrowTime = MaxStartDelayGrowTime;
+                MinStartGrowTime = MaxStartGrowTime;
             }
         }
 

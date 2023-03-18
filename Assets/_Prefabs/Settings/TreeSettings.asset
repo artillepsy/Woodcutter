@@ -16,8 +16,8 @@ MonoBehaviour:
   MaxSpawnCount: 5
   MinGrowTime: 20
   MaxGrowTime: 30
-  MinStartDelayGrowTime: 0
-  MaxStartDelayGrowTime: 0.3
+  MinStartGrowTime: 0
+  MaxStartGrowTime: 0.4
   treePrefabsBindings:
   - Prefab: {fileID: 8755911986394920545, guid: cafb72732116a184bb5ed9b103ca0b23,
       type: 3}
