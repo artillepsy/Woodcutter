@@ -8,6 +8,7 @@ namespace Assets.Scripts.Trees
     public class TreeAnimation : MonoBehaviour
     {
         [SerializeField] private Transform meshHolder;
+        [SerializeField] private Transform temporalMeshHolder;
         [SerializeField] private Collider treeCollider;
         [SerializeField] private TreeObject thisTree;
         [Space]
@@ -63,24 +64,24 @@ namespace Assets.Scripts.Trees
         private IEnumerator FlyDownCo()
         {
             treeCollider.enabled = false;
+
+            var time = 0f;
+            var oldParent = meshHolder.parent;
             var playerPos = thisTree.Health.PlayerKickPos;
 
-            var localUpDirection = (transform.position - playerPos).normalized;
-            var localRightDirection = Quaternion.Euler(0, 90, 0) * localUpDirection;
-            var localForwardDirection = Quaternion.AngleAxis(rotateDegrees, localRightDirection) * localUpDirection;
-
-            var startRotation = meshHolder.rotation;
-            var endRotation = Quaternion.LookRotation(localForwardDirection, localUpDirection);
-            var time = 0f;
+            var startForward = (transform.position - playerPos).normalized;
+            temporalMeshHolder.rotation = Quaternion.LookRotation(startForward, Vector3.up);
+            var endForward = Quaternion.AngleAxis(rotateDegrees, temporalMeshHolder.right) * startForward;
+            meshHolder.SetParent(temporalMeshHolder);
 
             while (time < fallDownTime)
             {
                 var lerpValue = fallRotationLerpCurve.Evaluate(time / fallDownTime);
-                meshHolder.rotation = Quaternion.Lerp(startRotation, endRotation, lerpValue);
+                temporalMeshHolder.forward = Vector3.Lerp(startForward, endForward, lerpValue);
                 time += Time.deltaTime;
                 yield return null;
             }
-
+            meshHolder.SetParent(oldParent);
             Pool.Add(thisTree);
         }
 
