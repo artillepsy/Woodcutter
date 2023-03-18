@@ -5,12 +5,20 @@
     /// </summary>
     public static class EventStrings
     {
+        // глобальные ивенты
+        public const string LEVEL_UP = "LevelUp";
+
         // ввод
         public const string JOYSTICK_INPUT = "JoystickInput";
 
+        // действия
+        public const string TREE_KICKED = "ActionKicked";
+
         // анимации
-        public const string ANIMATOR_IDLE = "AnimatorIdle";
-        public const string ANIMATOR_MOVE = "AnimatorMove";
-        public const string ANIMATOR_CUT = "AnimatorCut";
+        public const string CUT_PROPERTY_CHANGED = "AnimatorCutPropertyChanged";
+
+        // манипуляции с растительностью
+        public const string TREE_CUTTED = "TreeCutted";
+        public const string STUMP_GROWED = "StumpGrowed";
     }
 }

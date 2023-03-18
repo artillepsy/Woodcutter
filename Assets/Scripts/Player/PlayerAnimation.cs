@@ -16,17 +16,24 @@ namespace Assets.Scripts.Player
 
         private void OnEnable()
         {
-            EventMaster.AddListener<bool>(EventStrings.ANIMATOR_CUT, SetCuttingBoolean);
+            EventMaster.AddListener(EventStrings.TREE_KICKED, SetKickTrigger);
+            EventMaster.AddListener<bool>(EventStrings.CUT_PROPERTY_CHANGED, SetCuttingBoolean);
         }
 
         private void OnDisable()
         {
-            EventMaster.RemoveListener<bool>(EventStrings.ANIMATOR_CUT, SetCuttingBoolean);
-        }
+            EventMaster.RemoveListener(EventStrings.TREE_KICKED, SetKickTrigger);
+            EventMaster.RemoveListener<bool>(EventStrings.CUT_PROPERTY_CHANGED, SetCuttingBoolean);
 
+        }
         private void SetCuttingBoolean(bool status)
         {
             animator.SetBool(AnimatorStrings.IS_CUTTING, status);
+        }
+
+        private void SetKickTrigger()
+        {
+            animator.SetTrigger(AnimatorStrings.KICK);
         }
 
         private void Update()
@@ -35,7 +42,7 @@ namespace Assets.Scripts.Player
 
             if (_isMoving != isMovingAtThisFrame)
             {
-                animator.SetBool(AnimatorStrings.IS_CUTTING, isMovingAtThisFrame);
+                animator.SetBool(AnimatorStrings.IS_MOVING, isMovingAtThisFrame);
                 _isMoving = isMovingAtThisFrame;
             }
         }

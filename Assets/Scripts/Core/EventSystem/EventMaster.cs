@@ -34,7 +34,9 @@ namespace Assets.Scripts.Core
             }
 
             var handlersToDelete = new List<Delegate>();
-            foreach(var handler in _listeners[eventName])
+            var listenerCount = 0;
+
+            foreach (var handler in _listeners[eventName])
             {
                 if (handler == null)
                 {
@@ -43,6 +45,7 @@ namespace Assets.Scripts.Core
                 else if (handler is Action action)
                 {
                     action?.Invoke();
+                    listenerCount++;
                 }
             }
 
@@ -58,7 +61,7 @@ namespace Assets.Scripts.Core
 
             if (_debug)
             {
-                Debug.Log($"Push event: {eventName}");
+                Debug.Log($"Push event [{eventName}] to {listenerCount} listeners");
             }
         }
 
@@ -74,10 +77,12 @@ namespace Assets.Scripts.Core
             {
                 return;
             }
-            
+            var listenerCount = 0;
+            var handlerCount = 0;
             var handlersToDelete = new List<Delegate>();
             foreach (var handler in _listeners[eventName])
             {
+                handlerCount++;
                 if (handler == null)
                 {
                     handlersToDelete.Add(handler);
@@ -85,10 +90,12 @@ namespace Assets.Scripts.Core
                 else if (handler is Action<T> action)
                 {
                     action?.Invoke(data);
+                    listenerCount++;
                 }
                 else if (handler is Action action1)
                 {
                     action1?.Invoke();
+                    listenerCount++;
                 }
             }
 
@@ -104,7 +111,7 @@ namespace Assets.Scripts.Core
 
             if (_debug)
             {
-                Debug.Log($"Push event: {eventName}");
+                Debug.Log($"Push event [{eventName}] to {listenerCount} listeners, handlers: {handlerCount}");
             }
         }
 
@@ -121,6 +128,12 @@ namespace Assets.Scripts.Core
             }
 
             _listeners[eventName].Add(handler);
+
+            if (_debug)
+            {
+                Debug.Log($"Key existance: {_listeners[eventName].Contains(handler)}," +
+                    $" handler: {handler.Method.Name}, class: {handler.Method.DeclaringType}");
+            }
         }
 
         /// <summary>
@@ -136,6 +149,12 @@ namespace Assets.Scripts.Core
             }
 
             _listeners[eventName].Add(handler);
+            
+            if (_debug)
+            {
+                Debug.Log($"Key existance: {_listeners[eventName].Contains(handler)}," +
+                    $" handler: {handler.Method.Name}, class: {handler.Method.DeclaringType}");
+            }
         }
 
         /// <summary>
@@ -145,6 +164,11 @@ namespace Assets.Scripts.Core
         /// <param name="handlerToRemove">Функция-обработчик без параметров</param>
         public static void RemoveListener(string eventName, Action handlerToRemove)
         {
+            if (!_listeners.ContainsKey(eventName))
+            {
+                return;
+            }
+
             foreach(var handler in _listeners[eventName])
             {
                 if (handler.Method.Equals(handlerToRemove.Method))
@@ -169,6 +193,11 @@ namespace Assets.Scripts.Core
         /// <param name="handlerToRemove">Функция-обработчик без параметров</param>
         public static void RemoveListener<T>(string eventName, Action<T> handlerToRemove)
         {
+            if (!_listeners.ContainsKey(eventName))
+            {
+                return;
+            }
+
             foreach (var handler in _listeners[eventName])
             {
                 if (handler.Method.Equals(handlerToRemove.Method))

@@ -9,6 +9,7 @@ namespace Assets.Scripts.Player
         [SerializeField] private float angleSpeed = 120f;
         private Vector3 _direction;
         private Rigidbody _rb;
+        private BlockElement _movementBlocker = new BlockElement();
 
         private void Awake()
         {
@@ -32,7 +33,7 @@ namespace Assets.Scripts.Player
 
         private void FixedUpdate()
         {
-            if (_direction == Vector3.zero)
+            if (_movementBlocker.IsBlocking || _direction == Vector3.zero)
             {
                 _rb.velocity = Vector3.zero;
                 return;

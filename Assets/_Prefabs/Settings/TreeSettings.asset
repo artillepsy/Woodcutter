@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e29931ad8791de24ba25468538dc5a6d, type: 3}
+  m_Name: TreeSettings
+  m_EditorClassIdentifier: 
+  MinSpawnCount: 5
+  MaxSpawnCount: 10
+  MinGrowTime: 20
+  MaxGrowTime: 30
+  MinStartDelayGrowTime: 4
+  MaxStartDelayGrowTime: 30
+  treePrefabsBindings:
+  - Prefab: {fileID: 8755911986394920545, guid: cafb72732116a184bb5ed9b103ca0b23,
+      type: 3}
+    HealthPoints: 10
+    LootCount: 3
+    SpawnProbability: 0.244
