@@ -9,6 +9,7 @@ namespace Assets.Scripts.Trees
 {
     public class TreeEffects : MonoBehaviour
     {
+        [SerializeField] private EffectBinding growEffectBinding;
         [SerializeField] private List<EffectBinding> effectsBindings;
         [SerializeField] private TreeObject thisTree;
 
@@ -16,11 +17,32 @@ namespace Assets.Scripts.Trees
         {
             EventMaster.AddListener<TreeObject>(EventStrings.TREE_KICKED, SpawnParticlesIfThis);
             EventMaster.AddListener<TreeObject>(EventStrings.TREE_CUTTED, SpawnParticlesIfThis);
+            EventMaster.AddListener<TreeObject>(EventStrings.TREE_GROWED, SpawnGrowPartilesIfThis);
         }
 
         private void OnDisable()
         {
+            EventMaster.RemoveListener<TreeObject>(EventStrings.TREE_KICKED, SpawnParticlesIfThis);
             EventMaster.RemoveListener<TreeObject>(EventStrings.TREE_CUTTED, SpawnParticlesIfThis);
+            EventMaster.RemoveListener<TreeObject>(EventStrings.TREE_GROWED, SpawnGrowPartilesIfThis);
+        }
+
+        public void SpawnGrowParticles()
+        {
+            var inst = Pool.Get(growEffectBinding.EffectPrefab.ID) as Effect;
+            inst.transform.position = growEffectBinding.PlaceTarget.position;
+            inst.gameObject.SetActive(true);
+            inst.Play();
+        }
+
+        private void SpawnGrowPartilesIfThis(TreeObject tree)
+        {
+            if (thisTree != tree)
+            {
+                return;
+            }
+
+            SpawnGrowParticles();
         }
 
         private void SpawnParticlesIfThis(TreeObject tree)

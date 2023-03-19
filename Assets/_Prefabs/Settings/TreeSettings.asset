@@ -19,28 +19,28 @@ MonoBehaviour:
   MinStartGrowTime: 0
   MaxStartGrowTime: 0.4
   treePrefabsBindings:
-  - Prefab: {fileID: 8755911986394920545, guid: cafb72732116a184bb5ed9b103ca0b23,
-      type: 3}
-    HealthPoints: 3
-    LootCount: 3
-    SpawnProbability: 0.244
   - Prefab: {fileID: 8755911986394920545, guid: 501196fa54dbe4e47b323324e231fe0b,
       type: 3}
-    HealthPoints: 3
+    HealthPoints: 9
     LootCount: 3
-    SpawnProbability: 0.244
+    SpawnProbability: 0.109
+  - Prefab: {fileID: 8755911986394920545, guid: cafb72732116a184bb5ed9b103ca0b23,
+      type: 3}
+    HealthPoints: 6
+    LootCount: 2
+    SpawnProbability: 0.253
   - Prefab: {fileID: 8755911986394920545, guid: cbc01510b0c2a664cba75f8c78289efa,
       type: 3}
-    HealthPoints: 3
-    LootCount: 3
+    HealthPoints: 6
+    LootCount: 2
     SpawnProbability: 0.244
-  - Prefab: {fileID: 8755911986394920545, guid: 1e8f849fab2265147ac05131e7acf530,
-      type: 3}
-    HealthPoints: 1
-    LootCount: 1
-    SpawnProbability: 0.377
   - Prefab: {fileID: 8755911986394920545, guid: 25ff400f285b51a449222f0db8f14d7a,
       type: 3}
-    HealthPoints: 1
-    LootCount: 1
+    HealthPoints: 6
+    LootCount: 2
     SpawnProbability: 0.27
+  - Prefab: {fileID: 8755911986394920545, guid: 1e8f849fab2265147ac05131e7acf530,
+      type: 3}
+    HealthPoints: 3
+    LootCount: 1
+    SpawnProbability: 0.314

@@ -21,8 +21,9 @@
         public const string START_KICK = "StartKick";
 
         // манипуляции с растительностью
+        public const string TREE_GROWED = "TreeGrowed";
         public const string TREE_CUTTED = "TreeCutted";
-        public const string STUMP_GROWED = "StumpGrowed";
         public const string TREE_LOOT_DROP = "TreeLootDrop";
+        public const string STUMP_GROWED = "StumpGrowed";
     }
 }

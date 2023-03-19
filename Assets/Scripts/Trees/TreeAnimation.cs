@@ -18,7 +18,9 @@ namespace Assets.Scripts.Trees
         [Space]
         [SerializeField] private float growTime = 1f;
         [SerializeField] private AnimationCurve scaleLerpCurve;
+        [SerializeField] private TreeEffects treeEffects;
         private Vector3 _endMeshScale;
+        private bool _firstGrow = true;
 
         private void Awake()
         {
@@ -82,6 +84,7 @@ namespace Assets.Scripts.Trees
                 yield return null;
             }
             meshHolder.SetParent(oldParent);
+            treeEffects.SpawnGrowParticles();
             Pool.Add(thisTree);
         }
 
@@ -103,6 +106,14 @@ namespace Assets.Scripts.Trees
             }
 
             meshHolder.localScale = _endMeshScale;
+
+            if (_firstGrow)
+            {
+                _firstGrow = false;
+                yield break;
+            }
+
+            EventMaster.PushEvent(EventStrings.TREE_GROWED, thisTree);
         }
     }
 }

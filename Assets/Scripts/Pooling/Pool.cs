@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
 
 namespace Assets.Scripts.Pooling
@@ -9,7 +8,7 @@ namespace Assets.Scripts.Pooling
     {
         private static Pool _poolInst;
 
-        private List<PoolableMonoBehaviour> _prefabs = new List<PoolableMonoBehaviour>();
+        [SerializeField] private List<PoolableMonoBehaviour> prefabs;
         private List<PoolableMonoBehaviour> _inactiveInstances = new List<PoolableMonoBehaviour>();
         private List<PoolableMonoBehaviour> _activeInstances = new List<PoolableMonoBehaviour>();
         private Dictionary<PoolableType, Transform> _parents = new Dictionary<PoolableType, Transform>();
@@ -26,7 +25,6 @@ namespace Assets.Scripts.Pooling
                 return;
             }
 
-            _prefabs = GetPrefabsFromFolder();
             SpawnParents();
         }
 
@@ -64,28 +62,9 @@ namespace Assets.Scripts.Pooling
             return _poolInst._activeInstances.Where(inst => inst.Type == type).ToList();
         }
 
-        private List<PoolableMonoBehaviour> GetPrefabsFromFolder()
-        {
-            var guids = AssetDatabase.FindAssets("t:Prefab", new[] { "Assets/_Prefabs" });
-            var prefabs = new List<PoolableMonoBehaviour>();
-
-            foreach (var guid in guids)
-            {
-                var path = AssetDatabase.GUIDToAssetPath(guid);
-                var prefab = AssetDatabase.LoadAssetAtPath<PoolableMonoBehaviour>(path);
-                
-                if (prefab)
-                {
-                    prefabs.Add(prefab);
-                }
-            }
-
-            return prefabs;
-        }
-
         private PoolableMonoBehaviour GetPrefabById(int id)
         {
-            foreach (var obj in _prefabs)
+            foreach (var obj in prefabs)
             {
                 if (obj.ID == id)
                 {
@@ -127,18 +106,18 @@ namespace Assets.Scripts.Pooling
 
         private void SpawnParents()
         {
-            for (var i = 0; i < _prefabs.Count; i++)
+            for (var i = 0; i < prefabs.Count; i++)
             {
-                _prefabs[i].ID = i + 1;
+                prefabs[i].ID = i + 1;
 
-                if (_parents.ContainsKey(_prefabs[i].Type))
+                if (_parents.ContainsKey(prefabs[i].Type))
                 {
                     continue;
                 }
 
-                var instance = new GameObject($"{_prefabs[i].Type}_parent");
+                var instance = new GameObject($"{prefabs[i].Type}_parent");
                 instance.transform.parent = transform;
-                _parents.Add(_prefabs[i].Type, instance.transform);
+                _parents.Add(prefabs[i].Type, instance.transform);
             }
         }
     }

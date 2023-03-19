@@ -1,17 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using Assets.Scripts.Trees;
+using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace Assets.Scripts.Core.Sound
 {
     public class SoundPlayer : MonoBehaviour
     {
         [SerializeField] private AudioSource audioSource;
+        [SerializeField] private Transform player;
+        [SerializeField] private bool debug = true;
         [Space]
         [SerializeField] private List<AudioClipBinding> treeKickAudios;
         [SerializeField] private List<AudioClipBinding> treeCutAudios;
+        [SerializeField] private List<AudioClipBinding> treeGrowAudios;
         [SerializeField] private List<AudioClipBinding> stepsAudios;
         [SerializeField] private AudioClipBinding levelUpAudio;
-        [SerializeField] private AudioClipBinding levelUpRequestAudio;
+        [Space]
+        [SerializeField, Min(0)] private float minFadeRadius = 10f;
+        [SerializeField, Min(0)] private float maxFadeRadius = 30f;
         [Space]
         [SerializeField] private float playStepsSoundInterval = 0.3f;
         private Vector2 _joystickData;
@@ -20,26 +29,29 @@ namespace Assets.Scripts.Core.Sound
         private void OnEnable()
         {
             EventMaster.AddListener(EventStrings.TREE_KICKED, () => PlayOnce(treeKickAudios));
+            EventMaster.AddListener(EventStrings.TREE_CUTTED, () => PlayOnce(treeKickAudios));
             EventMaster.AddListener(EventStrings.TREE_CUTTED, () => PlayOnce(treeCutAudios));
-            EventMaster.AddListener(EventStrings.LEVEL_UP, () => PlayOnce(levelUpAudio));
-            EventMaster.AddListener(EventStrings.LEVEL_UP_REQUEST, () => PlayOnce(levelUpRequestAudio));
+            EventMaster.AddListener<int>(EventStrings.LEVEL_UP, PlayLevelUpClip);
             EventMaster.AddListener<Vector2>(EventStrings.JOYSTICK_INPUT, (data) => _joystickData = data);
+            EventMaster.AddListener<TreeObject>(EventStrings.TREE_GROWED,
+                (tree) => PlayOnce(treeGrowAudios, tree.transform.position));
         }
 
         private void OnDisable()
         {
             EventMaster.RemoveListener(EventStrings.TREE_KICKED, () => PlayOnce(treeKickAudios));
+            EventMaster.RemoveListener(EventStrings.TREE_CUTTED, () => PlayOnce(treeKickAudios));
             EventMaster.RemoveListener(EventStrings.TREE_CUTTED, () => PlayOnce(treeCutAudios));
-            EventMaster.RemoveListener(EventStrings.LEVEL_UP, () => PlayOnce(levelUpAudio));
-            EventMaster.RemoveListener(EventStrings.LEVEL_UP_REQUEST, () => PlayOnce(levelUpRequestAudio));
+            EventMaster.RemoveListener<int>(EventStrings.LEVEL_UP, PlayLevelUpClip);
             EventMaster.RemoveListener<Vector2>(EventStrings.JOYSTICK_INPUT, (data) => _joystickData = data);
+            EventMaster.RemoveListener<TreeObject>(EventStrings.TREE_GROWED,
+                (tree) => PlayOnce(treeGrowAudios, tree.transform.position));
         }
 
         private void Update()
         {
             if (_joystickData == Vector2.zero)
             {
-                _timeSinceLastStepSound = 0f;
                 return;
             }
             _timeSinceLastStepSound += Time.deltaTime;
@@ -51,6 +63,14 @@ namespace Assets.Scripts.Core.Sound
             }
         }
 
+        private void PlayLevelUpClip(int level)
+        {
+            if (level != 1)
+            {
+                PlayOnce(levelUpAudio);
+            }
+        }
+
         private void PlayOnce(AudioClipBinding binding)
         {
             audioSource.PlayOneShot(binding.Clip, binding.Volume);
@@ -59,8 +79,64 @@ namespace Assets.Scripts.Core.Sound
         private void PlayOnce(List<AudioClipBinding> bindings)
         {
             var binding = bindings[Random.Range(0, bindings.Count)];
-            audioSource.PlayOneShot(binding.Clip, binding.Volume);
+            PlayOnce(binding);
         }
+
+        private void PlayOnce(AudioClipBinding binding, Vector3 pos)
+        {
+            var volume = GetInfluencedVolume(pos, binding.Volume);
+            
+            if (debug)
+            {
+                Debug.Log($"volume: {volume}");
+            }
+
+            if (volume == 0f)
+            {
+                return;
+            }
+
+            audioSource.PlayOneShot(binding.Clip, volume);
+        }
+
+        private void PlayOnce(List<AudioClipBinding> bindings, Vector3 pos)
+        {
+            var binding = bindings[Random.Range(0, bindings.Count)];
+            PlayOnce(binding, pos);
+        }
+
+        private float GetInfluencedVolume(Vector3 pos, float startValue)
+        {
+            var distance = Vector3.Distance(pos, player.position);
+
+            if (distance <= minFadeRadius)
+            {
+                return startValue;
+            }
+            else if (distance >= maxFadeRadius)
+            {
+                return 0f;
+            }
+
+            return Mathf.InverseLerp(maxFadeRadius, minFadeRadius, distance) * startValue;
+        }
+
+#if UNITY_EDITOR
+        private void OnDrawGizmos()
+        {
+            if (!debug)
+            {
+                return;
+            }
+
+            Handles.color = Color.red;
+            var rotation = Quaternion.Euler(90, 0, 0);
+            var position = player ? player.position : transform.position;
+            Handles.CircleHandleCap(0, position, rotation, minFadeRadius, EventType.Repaint);
+            Handles.color = Color.green;
+            Handles.CircleHandleCap(0, position, rotation, maxFadeRadius, EventType.Repaint);
+        }
+#endif
     }
 
     [System.Serializable]
