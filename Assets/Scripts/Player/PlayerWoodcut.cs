@@ -63,6 +63,11 @@ namespace Assets.Scripts.Player
         {
             _isCutting = status;
             EventMaster.PushEvent(EventStrings.CUT_PROPERTY_CHANGED, status);
+            
+            if (!status)
+            {
+                CancelInvoke();
+            }
         }
         private void Damage()
         {

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3199836425668552761
+--- !u!1 &2656116631611195585
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,24 +8,85 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3049248253896076885}
-  m_Layer: 0
-  m_Name: EffectTarget
+  - component: {fileID: 4990357416257816266}
+  m_Layer: 7
+  m_Name: MeshHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3049248253896076885
+--- !u!4 &4990357416257816266
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3199836425668552761}
+  m_GameObject: {fileID: 2656116631611195585}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.722, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1747441716502027671}
+  m_Father: {fileID: 6866773498801035641}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: -0.98635566, y: 0.5021751, z: -0.091765}
+--- !u!1 &2715653624396381849
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3884743750626269238}
+  m_Layer: 7
+  m_Name: LeavesEffectTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3884743750626269238
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2715653624396381849}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.81, z: 0}
+  m_LocalScale: {x: 1.0572389, y: 1.0572389, z: 1.0572389}
+  m_Children: []
+  m_Father: {fileID: 6866773498801035641}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3216407877404484291
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7652196885078804271}
+  m_Layer: 7
+  m_Name: WoodEffectTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7652196885078804271
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3216407877404484291}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.26853868, z: 0}
+  m_LocalScale: {x: 1.0572389, y: 1.0572389, z: 1.0572389}
   m_Children: []
   m_Father: {fileID: 6866773498801035641}
   m_RootOrder: 2
@@ -77,8 +138,9 @@ GameObject:
   - component: {fileID: 97076197429023398}
   - component: {fileID: -44331329051141848}
   - component: {fileID: 643076700761541499}
+  - component: {fileID: 183327812020429146}
   m_Layer: 7
-  m_Name: Bush_2
+  m_Name: Tree_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -96,8 +158,9 @@ Transform:
   m_LocalScale: {x: 0.94586, y: 0.94586, z: 0.94586}
   m_Children:
   - {fileID: 6667943502405274108}
-  - {fileID: 1747441716502027671}
-  - {fileID: 3049248253896076885}
+  - {fileID: 4990357416257816266}
+  - {fileID: 7652196885078804271}
+  - {fileID: 3884743750626269238}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -145,7 +208,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60823c87e24f2384085ea969c5fc1770, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  meshHolder: {fileID: 1747441716502027671}
+  meshHolder: {fileID: 4990357416257816266}
   temporalMeshHolder: {fileID: 6667943502405274108}
   treeCollider: {fileID: 97076197429023398}
   thisTree: {fileID: 8755911986394920545}
@@ -299,9 +362,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a5769033094d4c4eb523e17f69627ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  kickPsPrefab: {fileID: 1365592620109996479, guid: 3d12f5dcf38dcbc4b8b5350f2dd0ad0e,
-    type: 3}
-  effectsPlaceTarget: {fileID: 3049248253896076885}
+  effectsBindings:
+  - <EffectPrefab>k__BackingField: {fileID: 1365592620109996479, guid: 3d12f5dcf38dcbc4b8b5350f2dd0ad0e,
+      type: 3}
+    <PlaceTarget>k__BackingField: {fileID: 7652196885078804271}
+  - <EffectPrefab>k__BackingField: {fileID: 1365592620109996479, guid: ba88d10efed197a4f88b5cecca0a9ed7,
+      type: 3}
+    <PlaceTarget>k__BackingField: {fileID: 3884743750626269238}
   thisTree: {fileID: 8755911986394920545}
 --- !u!114 &643076700761541499
 MonoBehaviour:
@@ -353,12 +420,29 @@ MonoBehaviour:
     m_RotationOrder: 4
   emitTime: 0.26
   thisTree: {fileID: 8755911986394920545}
+--- !u!114 &183327812020429146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6090682341313110480}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9cf505499464da4c9016719d0219692, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshHolder: {fileID: 4990357416257816266}
+  thisTree: {fileID: 8755911986394920545}
+  maxRotationAngle: 4.71
+  rotationTime: 0.7
+  rotationPoints: 2
 --- !u!1001 &1751546749593044269
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 6866773498801035641}
+    m_TransformParent: {fileID: 4990357416257816266}
     m_Modifications:
     - target: {fileID: 1850301125167232, guid: 00cafff9e8700de49b18e027a2c5fa8a, type: 3}
       propertyPath: m_Name
@@ -366,19 +450,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4106154111572154, guid: 00cafff9e8700de49b18e027a2c5fa8a, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4106154111572154, guid: 00cafff9e8700de49b18e027a2c5fa8a, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.4090003
+      value: 1.4090004
       objectReference: {fileID: 0}
     - target: {fileID: 4106154111572154, guid: 00cafff9e8700de49b18e027a2c5fa8a, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.4090003
+      value: 1.4090004
       objectReference: {fileID: 0}
     - target: {fileID: 4106154111572154, guid: 00cafff9e8700de49b18e027a2c5fa8a, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.4090003
+      value: 1.4090004
       objectReference: {fileID: 0}
     - target: {fileID: 4106154111572154, guid: 00cafff9e8700de49b18e027a2c5fa8a, type: 3}
       propertyPath: m_LocalPosition.x

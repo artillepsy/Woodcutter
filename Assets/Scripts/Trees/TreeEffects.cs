@@ -1,14 +1,15 @@
 ﻿using Assets.Scripts.Core;
 using Assets.Scripts.Effects;
 using Assets.Scripts.Pooling;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.Trees
 {
     public class TreeEffects : MonoBehaviour
     {
-        [SerializeField] private Effect kickPsPrefab;
-        [SerializeField] private Transform effectsPlaceTarget;
+        [SerializeField] private List<EffectBinding> effectsBindings;
         [SerializeField] private TreeObject thisTree;
 
         private void OnEnable()
@@ -29,12 +30,20 @@ namespace Assets.Scripts.Trees
                 return;
             }
 
-            Debug.Log("Play");
-
-            var inst = Pool.Get(kickPsPrefab.ID) as Effect;
-            inst.transform.position = effectsPlaceTarget.position;
-            inst.gameObject.SetActive(true);
-            inst.Play();
+            foreach(var binding in effectsBindings)
+            {
+                var inst = Pool.Get(binding.EffectPrefab.ID) as Effect;
+                inst.transform.position = binding.PlaceTarget.position;
+                inst.gameObject.SetActive(true);
+                inst.Play();
+            }
         }
+    }
+
+    [Serializable]
+    public class EffectBinding
+    {
+        [field: SerializeField] public Effect EffectPrefab { get; private set; }
+        [field: SerializeField] public Transform PlaceTarget { get; private set; }
     }
 }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1365592620109996476}
   - component: {fileID: 1365592620109996479}
   m_Layer: 8
-  m_Name: Effect
+  m_Name: FallingLeavesEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -214,8 +214,8 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 10.58
-      minScalar: 8.46
+      scalar: 9.31
+      minScalar: 5.27
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -267,8 +267,8 @@ ParticleSystem:
     startColor:
       serializedVersion: 2
       minMaxState: 2
-      minColor: {r: 0.5754717, g: 0.27074513, b: 0.105322145, a: 1}
-      maxColor: {r: 0.3773585, g: 0.20193598, b: 0.09398361, a: 1}
+      minColor: {r: 0.32937583, g: 0.4056604, b: 0.19670703, a: 1}
+      maxColor: {r: 0.23623565, g: 0.2924528, b: 0.13629404, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -652,7 +652,7 @@ ParticleSystem:
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 3.8
+      scalar: 0.25
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -705,8 +705,8 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 6
     enabled: 1
-    type: 4
-    angle: 77.79
+    type: 0
+    angle: 36.3
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
@@ -788,11 +788,11 @@ ParticleSystem:
     m_TextureColorAffectsParticles: 1
     m_TextureAlphaAffectsParticles: 1
     m_TextureBilinearFiltering: 0
-    randomDirectionAmount: 0
+    randomDirectionAmount: 1
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.0001
+      value: 1.6
       mode: 0
       spread: 0
       speed:
@@ -1021,7 +1021,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 22.2
+        scalar: 30.21
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -1408,7 +1408,7 @@ ParticleSystem:
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
-        key1: {r: 1, g: 1, b: 1, a: 1}
+        key1: {r: 1, g: 1, b: 1, a: 0.46666667}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
@@ -2510,7 +2510,7 @@ ParticleSystem:
       m_Bits: 4294967295
     influenceList: []
   ClampVelocityModule:
-    enabled: 0
+    enabled: 1
     x:
       serializedVersion: 2
       minMaxState: 0
@@ -2673,7 +2673,7 @@ ParticleSystem:
     magnitude:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 2.39
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -2727,11 +2727,11 @@ ParticleSystem:
     inWorldSpace: 0
     multiplyDragByParticleSize: 1
     multiplyDragByParticleVelocity: 1
-    dampen: 0
+    dampen: 0.17
     drag:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 0.16
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -3714,7 +3714,7 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 1
+    enabled: 0
     serializedVersion: 4
     type: 1
     collisionMode: 0
