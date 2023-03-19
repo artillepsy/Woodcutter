@@ -7,5 +7,6 @@ namespace Assets.Scripts.Pooling
         Wood,
         Stump,
         Effects,
+        UI,
     }
 }

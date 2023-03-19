@@ -98,7 +98,10 @@ namespace Assets.Scripts.Pooling
         private PoolableMonoBehaviour GetNewInstanceById(int id)
         {
             var instance = Instantiate(GetPrefabById(id));
-            instance.transform.SetParent(_parents[instance.Type]);
+            if (instance.Type != PoolableType.UI)
+            {
+                instance.transform.SetParent(_parents[instance.Type]);
+            }
             _poolInst._activeInstances.Add(instance);
             instance.ID = id;
             return instance;

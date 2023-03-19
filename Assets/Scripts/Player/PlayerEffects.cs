@@ -5,21 +5,24 @@ namespace Assets.Scripts.Player
 {
     public class PlayerEffects : MonoBehaviour
     {
-        [SerializeField] private ParticleSystem axePS;
+        [SerializeField] private ParticleSystem levelUpPS;
 
         private void OnEnable()
         {
-            EventMaster.AddListener(EventStrings.START_KICK, PlayAxeAnim);
+            EventMaster.AddListener<int>(EventStrings.LEVEL_UP, PlayAxeAnim);
         }
 
         private void OnDisable()
         {
-            EventMaster.RemoveListener(EventStrings.START_KICK, PlayAxeAnim);
+            EventMaster.RemoveListener<int>(EventStrings.LEVEL_UP, PlayAxeAnim);
         }
 
-        private void PlayAxeAnim()
+        private void PlayAxeAnim(int level)
         {
-            axePS.Play();
+            if (level != 1)
+            {
+                levelUpPS.Play();
+            }
         }
     }
 }

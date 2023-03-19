@@ -6,6 +6,7 @@ namespace Assets.Scripts.Core
 {
     public class LevelDisplay : MonoBehaviour
     {
+        [SerializeField] private Animation levelLabelAnimation;
         [SerializeField] private Button button;
         [SerializeField] private float disableDelay = 0.3f;
         [SerializeField] private Animator buttonAnimator;
@@ -16,25 +17,35 @@ namespace Assets.Scripts.Core
 
         private void OnEnable()
         {
-            EventMaster.AddListener<int>(EventStrings.LEVEL_UP, UpdateLevelLabel);
             EventMaster.AddListener(EventStrings.READY_TO_UPGRADE_LEVEL, SetActiveButton);
+            EventMaster.AddListener<int>(EventStrings.LEVEL_UP, UpdateLevelLabel);
+            EventMaster.AddListener<int>(EventStrings.LEVEL_UP, PlayLabelAnimation);
         }
 
         private void OnDisable()
         {
-            EventMaster.RemoveListener<int>(EventStrings.LEVEL_UP, UpdateLevelLabel);
             EventMaster.RemoveListener(EventStrings.READY_TO_UPGRADE_LEVEL, SetActiveButton);
+            EventMaster.RemoveListener<int>(EventStrings.LEVEL_UP, UpdateLevelLabel);
+            EventMaster.RemoveListener<int>(EventStrings.LEVEL_UP, PlayLabelAnimation);
         }
 
         private void Start()
         {
             _cam = Camera.main;
-            button.gameObject.SetActive(false);
+            DeactivateButton();
         }
 
         private void LateUpdate()
         {
             levelLabel.transform.position = _cam.WorldToScreenPoint(player.position);
+        }
+
+        private void PlayLabelAnimation(int level)
+        {
+            if (level != 1)
+            {
+                levelLabelAnimation.Play();
+            }
         }
 
         public void OnClickLevelUp()
