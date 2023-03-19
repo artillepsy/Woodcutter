@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e29931ad8791de24ba25468538dc5a6d, type: 3}
   m_Name: TreeSettings
   m_EditorClassIdentifier: 
-  MinSpawnCount: 5
-  MaxSpawnCount: 5
+  MinSpawnCount: 85
+  MaxSpawnCount: 96
   MinGrowTime: 20
   MaxGrowTime: 30
   MinStartGrowTime: 0
@@ -24,3 +24,23 @@ MonoBehaviour:
     HealthPoints: 3
     LootCount: 3
     SpawnProbability: 0.244
+  - Prefab: {fileID: 8755911986394920545, guid: 501196fa54dbe4e47b323324e231fe0b,
+      type: 3}
+    HealthPoints: 3
+    LootCount: 3
+    SpawnProbability: 0.244
+  - Prefab: {fileID: 8755911986394920545, guid: cbc01510b0c2a664cba75f8c78289efa,
+      type: 3}
+    HealthPoints: 3
+    LootCount: 3
+    SpawnProbability: 0.244
+  - Prefab: {fileID: 8755911986394920545, guid: 1e8f849fab2265147ac05131e7acf530,
+      type: 3}
+    HealthPoints: 1
+    LootCount: 1
+    SpawnProbability: 0.377
+  - Prefab: {fileID: 8755911986394920545, guid: 25ff400f285b51a449222f0db8f14d7a,
+      type: 3}
+    HealthPoints: 1
+    LootCount: 1
+    SpawnProbability: 0.27
