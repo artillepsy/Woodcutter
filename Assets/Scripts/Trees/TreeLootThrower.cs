@@ -24,6 +24,8 @@ namespace Assets.Scripts.Trees
             {
                 return;
             }
+
+            EventMaster.PushEvent(EventStrings.TREE_LOOT_DROP, WoodCount);
         }
     }
 }

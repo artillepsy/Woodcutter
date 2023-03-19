@@ -19,13 +19,13 @@ namespace Assets.Scripts.Trees
             {
                 return;
             }
-
+            Debug.Log("Hitted");
             HealthPoints -= damagePoints;
             PlayerKickPos = playerPos;
             
             if (HealthPoints > 0)
             {
-                EventMaster.PushEvent(EventStrings.TREE_KICKED);
+                EventMaster.PushEvent(EventStrings.TREE_KICKED, thisTree);
                 return;
             }
 

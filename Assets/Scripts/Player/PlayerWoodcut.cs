@@ -6,15 +6,15 @@ namespace Assets.Scripts.Player
 {
     public class PlayerWoodcut : MonoBehaviour
     {
-        [SerializeField, Range(0, 1)] private float damageTimeValueAtInterval = 0.5f;
+        [SerializeField, Range(0, 1)] private float damageTimeOffset = 0.5f;
         private PlayerTreeSearcher _treeSearcher;
         private Rigidbody _rb;
         private bool _isCutting = false;
-        private float _timeSinceLastTick;
-        private float _tickTime;
-        private bool _damagedAtThisInterval = false;
-        private bool _kickEventWasPushed = false;
         private int _kickPoints;
+
+        private float _animInterval;
+        private float _animTime;
+
         // таймер сбрасывается при каждом движении игрока
 
         private void Awake()
@@ -25,7 +25,8 @@ namespace Assets.Scripts.Player
 
         private void Start()
         {
-            _tickTime = LevelSettings.Inst.PlayerStatsSettings.TimeBetweenKiks;
+            _animInterval = LevelSettings.Inst.PlayerStatsSettings.TimeBetweenKiks;
+            _animTime = _animInterval;
         }
 
         private void OnEnable()
@@ -50,7 +51,7 @@ namespace Assets.Scripts.Player
             {
                 SetCutPropertyBoolean(false);
             }
-            UpdateTickTimer();
+            UpdateAnimationTimer();
         }
 
         private void UpdateKickPoints(int level)
@@ -61,47 +62,22 @@ namespace Assets.Scripts.Player
         private void SetCutPropertyBoolean(bool status)
         {
             _isCutting = status;
-            _timeSinceLastTick = 0f;
-            _damagedAtThisInterval = false;
-            _kickEventWasPushed = false;
-
             EventMaster.PushEvent(EventStrings.CUT_PROPERTY_CHANGED, status);
         }
-
-        private void UpdateTickTimer()
+        private void Damage()
         {
-            if (!_isCutting)
-            {
-                return;
-            }
-            var tree = _treeSearcher.NearestTree;
-            
-            if (!tree)
-            {
-                return;
-            }
-            if (!_kickEventWasPushed)
+            _treeSearcher.NearestTree.Health.TakeDamage(_kickPoints, transform.position);
+        }
+
+        private void UpdateAnimationTimer()
+        {
+            if (_isCutting && _animTime >= _animInterval)
             {
                 EventMaster.PushEvent(EventStrings.START_KICK);
-                _kickEventWasPushed = true;
+                Invoke(nameof(Damage), damageTimeOffset);
+                _animTime = 0f;
             }
-
-            _timeSinceLastTick += Time.deltaTime;
-
-            if (_timeSinceLastTick >= damageTimeValueAtInterval && !_damagedAtThisInterval)
-            {
-                tree.Health.TakeDamage(_kickPoints, transform.position);
-                _damagedAtThisInterval = true;
-                return;
-            }
-
-            if (_timeSinceLastTick < _tickTime)
-            {
-                return;
-            }
-            _timeSinceLastTick = 0f;
-            _damagedAtThisInterval = false;
-            _kickEventWasPushed = false;
+            _animTime += Time.deltaTime;
         }
     }
 }

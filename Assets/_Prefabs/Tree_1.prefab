@@ -30,6 +30,36 @@ Transform:
   m_Father: {fileID: 6866773498801035641}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5299196207546705138
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7751804521287103492}
+  m_Layer: 0
+  m_Name: EffectTarge
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7751804521287103492
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5299196207546705138}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.557, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6866773498801035641}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6090682341313110480
 GameObject:
   m_ObjectHideFlags: 0
@@ -45,6 +75,8 @@ GameObject:
   - component: {fileID: 6797607749887269844}
   - component: {fileID: 8246736588918049174}
   - component: {fileID: 97076197429023398}
+  - component: {fileID: -7404098575568298430}
+  - component: {fileID: -6849112315856234822}
   m_Layer: 7
   m_Name: Tree_1
   m_TagString: Untagged
@@ -65,6 +97,7 @@ Transform:
   m_Children:
   - {fileID: 6667943502405274108}
   - {fileID: 5501230462538049170}
+  - {fileID: 7751804521287103492}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -254,6 +287,72 @@ CapsuleCollider:
   m_Height: 1.6503004
   m_Direction: 1
   m_Center: {x: -0.052553557, y: 0.850828, z: 0.079448655}
+--- !u!114 &-7404098575568298430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6090682341313110480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a5769033094d4c4eb523e17f69627ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  kickPsPrefab: {fileID: 1365592620109996479, guid: 3d12f5dcf38dcbc4b8b5350f2dd0ad0e,
+    type: 3}
+  effectsPlaceTarget: {fileID: 7751804521287103492}
+  thisTree: {fileID: 8755911986394920545}
+--- !u!114 &-6849112315856234822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6090682341313110480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a830f64cb42804041a88e054faf1cb35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshRenderer: {fileID: 5483623649325888744}
+  startEmitColor: {r: 0, g: 0, b: 0, a: 1}
+  damagedEmitColor: {r: 0.26415092, g: 0.26415092, b: 0.26415092, a: 1}
+  emitCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.5
+      value: 1
+      inSlope: -0.010818998
+      outSlope: -0.010818998
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0.051744323
+      outSlope: 0.051744323
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.076805115
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  emitTime: 0.26
+  thisTree: {fileID: 8755911986394920545}
 --- !u!1001 &5496730048125187558
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -324,6 +423,12 @@ PrefabInstance:
 --- !u!4 &5501230462538049170 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4509296424702836, guid: cfcb6ecbdafd1c940b4dccdc2a3ae3ac,
+    type: 3}
+  m_PrefabInstance: {fileID: 5496730048125187558}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &5483623649325888744 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 23063891914752270, guid: cfcb6ecbdafd1c940b4dccdc2a3ae3ac,
     type: 3}
   m_PrefabInstance: {fileID: 5496730048125187558}
   m_PrefabAsset: {fileID: 0}

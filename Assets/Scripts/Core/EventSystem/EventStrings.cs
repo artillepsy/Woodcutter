@@ -21,5 +21,6 @@
         // манипуляции с растительностью
         public const string TREE_CUTTED = "TreeCutted";
         public const string STUMP_GROWED = "StumpGrowed";
+        public const string TREE_LOOT_DROP = "TreeLootDrop";
     }
 }

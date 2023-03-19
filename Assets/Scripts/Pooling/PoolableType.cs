@@ -5,6 +5,7 @@ namespace Assets.Scripts.Pooling
     {
         Tree,
         Wood,
-        Stump
+        Stump,
+        Effects,
     }
 }

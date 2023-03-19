@@ -11,12 +11,22 @@ namespace Assets.Scripts.Player
     public class PlayerTreeSearcher : MonoBehaviour
     {
         [SerializeField] private float searchRadius = 3f;
+        [SerializeField] private Transform helpCircle;
         public TreeObject NearestTree { get; private set; }
         private Rigidbody _rb;
 
         private void Awake()
         {
             _rb = GetComponent<Rigidbody>();
+            helpCircle.localScale = Vector3.one * searchRadius * 2f;
+        }
+
+        private void OnValidate()
+        {
+            if (helpCircle)
+            {
+                helpCircle.localScale = Vector3.one * searchRadius * 2f;
+            }
         }
 
         private void Update()

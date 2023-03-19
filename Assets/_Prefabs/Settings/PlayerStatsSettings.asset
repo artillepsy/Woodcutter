@@ -16,5 +16,5 @@ MonoBehaviour:
   <TimeBetweenKiks>k__BackingField: 1
   <StartKickPoints>k__BackingField: 1
   <IncrementKickPointsPerLevel>k__BackingField: 1
-  <StartWoodCountToNextLevel>k__BackingField: 2
-  <WoodIncrementCountPerLevel>k__BackingField: 2
+  <StartWoodCountToNextLevel>k__BackingField: 10
+  <WoodIncrementCountPerLevel>k__BackingField: 5

@@ -8,8 +8,6 @@ namespace Assets.Scripts.Player
         [SerializeField] private float angleSpeed = 500f;
         private PlayerTreeSearcher _treeSearcher;
         private bool _isCutting = false;
-        private bool _isRotating = false;
-        private Vector3 _currentTreePos;
 
         private void Awake()
         {
@@ -26,30 +24,21 @@ namespace Assets.Scripts.Player
             EventMaster.RemoveListener<bool>(EventStrings.CUT_PROPERTY_CHANGED, SetCuttingBoolean);
         }
 
-        private void SetCuttingBoolean(bool status)
-        {
-            _isCutting = status;
-
-            if (status)
-            {
-                _isRotating = true;
-                _currentTreePos = _treeSearcher.NearestTree.transform.position;
-            }
-        }
+        private void SetCuttingBoolean(bool status) => _isCutting = status;
 
         private void Update()
         {
-            if (!_isCutting || !_isRotating)
+            if (!_isCutting || !_treeSearcher.NearestTree)
             {
                 return;
             }
 
-            var lookDirection = (_currentTreePos - transform.position);
+            var treePos = _treeSearcher.NearestTree.transform.position;
+            var lookDirection = (treePos - transform.position);
             var toRotation = Quaternion.LookRotation(lookDirection, Vector3.up);
             
             if (transform.rotation == toRotation)
             {
-                _isRotating = false;
                 return;
             }
 
