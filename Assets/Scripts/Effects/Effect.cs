@@ -4,6 +4,10 @@ using UnityEngine;
 
 namespace Assets.Scripts.Effects
 {
+    /// <summary>
+    /// контейнер системы частиц с автоматическим добавлением
+    /// себя в пул объектов после единоразового проигрывания
+    /// </summary>
     public class Effect : PoolableMonoBehaviour
     {
         [SerializeField] private ParticleSystem ps;

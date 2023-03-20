@@ -7,6 +7,10 @@ using UnityEngine;
 
 namespace Assets.Scripts.Trees
 {
+    /// <summary>
+    /// Класс, отвечающий за эффекты во время событий,
+    /// связанных с деревом
+    /// </summary>
     public class TreeEffects : MonoBehaviour
     {
         [SerializeField] private EffectBinding growEffectBinding;
@@ -27,6 +31,9 @@ namespace Assets.Scripts.Trees
             EventMaster.RemoveListener<TreeObject>(EventStrings.TREE_GROWED, SpawnGrowPartilesIfThis);
         }
 
+        /// <summary>
+        /// После роста дерева появляется эффект опавших листьев
+        /// </summary>
         public void SpawnGrowParticles()
         {
             var inst = Pool.Get(growEffectBinding.EffectPrefab.ID) as Effect;
@@ -45,6 +52,10 @@ namespace Assets.Scripts.Trees
             SpawnGrowParticles();
         }
 
+        /// <summary>
+        /// Спавнит все системы частиц из списка
+        /// </summary>
+        /// <param name="tree"></param>
         private void SpawnParticlesIfThis(TreeObject tree)
         {
             if (thisTree != tree)

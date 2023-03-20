@@ -3,6 +3,10 @@ using UnityEngine;
 
 namespace Assets.Scripts.Trees
 {
+    /// <summary>
+    /// Класс здоровья дерева. Вызывает ивенты при
+    /// ударе по нему или при срубке
+    /// </summary>
     public class TreeHealth : MonoBehaviour
     {
         [field: SerializeField] public int MaxHealth { get; set; } = 4;

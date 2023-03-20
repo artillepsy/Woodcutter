@@ -3,6 +3,10 @@ using UnityEngine;
 
 namespace Assets.Scripts.Player
 {
+    /// <summary>
+    /// Класс, поворачивающий персонажа игрока к ближайшему (активному)
+    /// дереву во время рубки
+    /// </summary>
     public class PlayerRotationToTreeSetter : MonoBehaviour
     {
         [SerializeField] private float angleSpeed = 500f;

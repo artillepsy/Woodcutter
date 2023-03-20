@@ -4,6 +4,11 @@ using UnityEngine;
 
 namespace Assets.Scripts.Pooling
 {
+    /// <summary>
+    /// Контейнер заспавенных объектов для их многократного использования
+    /// без уничтожения. Содержит в себе все управляемые префабы и через него происходит 
+    /// спавн всех объектов такого типа на сцене.
+    /// </summary>
     public class Pool : MonoBehaviour
     {
         private static Pool _poolInst;
@@ -28,6 +33,10 @@ namespace Assets.Scripts.Pooling
             SpawnParents();
         }
 
+        /// <summary>
+        /// Метод даёт ссылку на заспавненный или существующий объект,
+        /// подходящий по id
+        /// </summary>
         public static PoolableMonoBehaviour Get(int id)
         {
             if (_poolInst._inactiveInstances.Count == 0)
@@ -42,14 +51,9 @@ namespace Assets.Scripts.Pooling
             return _poolInst.GetNewInstanceById(id);
         }
 
-        public static PoolableMonoBehaviour GetInstance(PoolableMonoBehaviour instance)
-        {
-            _poolInst._activeInstances.Add(instance);
-            _poolInst._inactiveInstances.Remove(instance);
-            instance.gameObject.SetActive(true);
-            return instance;
-        }
-
+        /// <summary>
+        /// Добавляет объект в список неактивных и деактивирует его
+        /// </summary>
         public static void Add(PoolableMonoBehaviour instance)
         {
             instance.gameObject.SetActive(false);
@@ -57,11 +61,17 @@ namespace Assets.Scripts.Pooling
             _poolInst._inactiveInstances.Add(instance);
         }
 
+        /// <summary>
+        /// Возвращает все активные объекты определённого типа в виде списка
+        /// </summary>
         public static List<PoolableMonoBehaviour> GetActiveByType(PoolableType type)
         {
             return _poolInst._activeInstances.Where(inst => inst.Type == type).ToList();
         }
 
+        /// <summary>
+        /// Поиск и возврат префаба, подходящего по ID
+        /// </summary>
         private PoolableMonoBehaviour GetPrefabById(int id)
         {
             foreach (var obj in prefabs)
@@ -74,18 +84,22 @@ namespace Assets.Scripts.Pooling
             return null;
         }
 
+        /// <summary>
+        /// Метод спавна нового объекта 
+        /// </summary>
         private PoolableMonoBehaviour GetNewInstanceById(int id)
         {
             var instance = Instantiate(GetPrefabById(id));
-            if (instance.Type != PoolableType.UI)
-            {
-                instance.transform.SetParent(_parents[instance.Type]);
-            }
+            instance.transform.SetParent(_parents[instance.Type]);
             _poolInst._activeInstances.Add(instance);
             instance.ID = id;
             return instance;
         }
-
+        
+        /// <summary>
+        /// Попытка получить ссылку на заспавненный неактивный объект.
+        /// В том случае, если нет таких, возвращает false
+        /// </summary>
         private bool TryGetInstById(int id, out PoolableMonoBehaviour instane)
         {
             foreach (var obj in _poolInst._inactiveInstances)
@@ -104,6 +118,10 @@ namespace Assets.Scripts.Pooling
             return false;
         }
 
+        /// <summary>
+        /// спавн объектов-родителей для каждого типа управляемых объектов.
+        /// Это помогает лучше организовать иерархию сцены во время выполнения
+        /// </summary>
         private void SpawnParents()
         {
             for (var i = 0; i < prefabs.Count; i++)

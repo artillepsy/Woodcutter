@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 namespace Assets.Scripts.UI
 {
+    /// <summary>
+    /// Отображает количество очков здоровья дерева в момент рубки
+    /// для удобства отслеживания процесса
+    /// </summary>
     public class TreeHealthDisplay : MonoBehaviour
     {
         [SerializeField] private Transform imageParent;
@@ -29,6 +33,10 @@ namespace Assets.Scripts.UI
             SetCuttingStatus(false);
         }
 
+        /// <summary>
+        /// Метод закрепляет здоровье дерева к позиции игрока
+        /// и обновляет слайдер здоровья дерева
+        /// </summary>
         private void LateUpdate()
         {
             if (_isCutting)

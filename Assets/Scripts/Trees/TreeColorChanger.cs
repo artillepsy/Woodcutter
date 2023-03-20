@@ -4,7 +4,11 @@ using UnityEngine;
 
 namespace Assets.Scripts.Trees
 {
-    public class TreeDamageReaction : MonoBehaviour
+    /// <summary>
+    /// Класс, отвечающий за изменения цвета дерева 
+    /// во время удара по нему
+    /// </summary>
+    public class TreeColorChanger : MonoBehaviour
     {
         private const string EmissionColorName = "_EmissionColor";
         [SerializeField] private MeshRenderer meshRenderer;
@@ -26,7 +30,10 @@ namespace Assets.Scripts.Trees
             EventMaster.RemoveListener<TreeObject>(EventStrings.TREE_KICKED, EmitMeshIfThis);
             EventMaster.RemoveListener<TreeObject>(EventStrings.TREE_CUTTED, EmitMeshIfThis);
         }
-
+        /// <summary>
+        /// Проверка ссылки объекта, вызвавшего ивент. Если ссылки равны,
+        /// изменяется цвет модельки дерева
+        /// </summary>
         private void EmitMeshIfThis(TreeObject instance)
         {
             if (instance != thisTree)

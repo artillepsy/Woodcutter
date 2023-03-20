@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace Assets.Scripts.Trees
 {
+    /// <summary>
+    /// Конроллер анимации роста и падения дерева
+    /// </summary>
     public class TreeAnimation : MonoBehaviour
     {
         [SerializeField] private Transform meshHolder;
@@ -49,6 +52,10 @@ namespace Assets.Scripts.Trees
             StartCoroutine(GrowCo(growDelay));
         }
 
+        /// <summary>
+        /// проверяет ссылку на объект, вызвавший ивент. Если 
+        /// ссылки равны, то запускается анимация
+        /// </summary>
         private void StartCutAnimationIfThis(TreeObject instance)
         {
             if (instance != thisTree)
@@ -63,6 +70,9 @@ namespace Assets.Scripts.Trees
             StartCoroutine(FlyDownCo());
         }
 
+        /// <summary>
+        /// Анимаци падения дерева в противоположную от игрока сторону
+        /// </summary>
         private IEnumerator FlyDownCo()
         {
             treeCollider.enabled = false;
@@ -88,6 +98,10 @@ namespace Assets.Scripts.Trees
             Pool.Add(thisTree);
         }
 
+        /// <summary>
+        /// Анимация роста дерева после спавна, запускающая соответствующий
+        /// ивент после завершения
+        /// </summary>
         private IEnumerator GrowCo(float growDelay)
         {
             var startScale = Vector3.zero;

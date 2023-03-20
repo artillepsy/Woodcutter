@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace Assets.Scripts.Settings
 {
+    /// <summary>
+    /// Содержит настройки характеристик деревьев, их спавна и роста
+    /// </summary>
     [CreateAssetMenu(menuName = nameof(TreeSettings), fileName = nameof(TreeSettings))]
     public class TreeSettings : ScriptableObject
     {
@@ -26,40 +29,14 @@ namespace Assets.Scripts.Settings
         public float RandomGrowTime => Random.Range(MinGrowTime, MaxGrowTime);
         public float RandomStartGrowTime => Random.Range(MinStartGrowTime, MaxStartGrowTime);
 
-        private void OnValidate()
-        {
-            if (MaxSpawnCount < MinSpawnCount)
-            {
-                MaxSpawnCount = MinSpawnCount;
-            }
-            if (MinSpawnCount > MaxSpawnCount)
-            {
-                MinSpawnCount = MaxSpawnCount;
-            }
-
-            if (MaxGrowTime < MinGrowTime)
-            {
-                MaxGrowTime = MinGrowTime;
-            }
-            if (MinGrowTime > MaxGrowTime)
-            {
-                MinGrowTime = MaxGrowTime;
-            }
-
-            if (MaxStartGrowTime < MinStartGrowTime)
-            {
-                MaxStartGrowTime = MinStartGrowTime;
-            }
-            if (MinStartGrowTime > MaxStartGrowTime)
-            {
-                MinStartGrowTime = MaxStartGrowTime;
-            }
-        }
-
+        /// <summary>
+        /// Настройка префабов деревьев
+        /// </summary>
         public void InitBindings()
         {
             treePrefabsBindings.ForEach(b => b.InitValues());
         }
+
 
         public TreeObject GetRandomPrefab()
         {

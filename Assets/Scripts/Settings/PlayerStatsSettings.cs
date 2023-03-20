@@ -2,11 +2,14 @@
 
 namespace Assets.Scripts.Settings
 {
+    /// <summary>
+    /// Содержит в себе настройки очков уровня и характеристик персонажа
+    /// </summary>
     [CreateAssetMenu(menuName = nameof(PlayerStatsSettings), fileName = nameof(PlayerStatsSettings))]
     public class PlayerStatsSettings : ScriptableObject
     {
         [field: SerializeField, Min(1)] public int StartLevel { get; private set; } = 1;
-        [field: SerializeField, Space, Min(0.1f)] public float TimeBetweenKiks { get; private set; } = 1f;
+        [field: SerializeField, Space, Min(0.1f)] public float TimeBetweenKiсks { get; private set; } = 1f;
 
         [field: SerializeField, Space, Min(1)] public int StartKickPoints { get; private set; } = 1;
         [field: SerializeField, Min(1)] public int IncrementKickPointsPerLevel { get; private set; } = 1;

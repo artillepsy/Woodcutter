@@ -4,6 +4,11 @@ using UnityEngine;
 
 namespace Assets.Scripts.Player
 {
+    /// <summary>
+    /// Компонент, отвечающий з взаимодействие персонажа с деревом.
+    /// Здесь наносится урон дереву и устанавливается переменная, отвечающая
+    /// за состояние рубки дерева
+    /// </summary>
     public class PlayerWoodcut : MonoBehaviour
     {
         [SerializeField, Range(0, 1)] private float damageTimeOffset = 0.5f;
@@ -25,7 +30,7 @@ namespace Assets.Scripts.Player
 
         private void Start()
         {
-            _animInterval = LevelSettings.Inst.PlayerStatsSettings.TimeBetweenKiks;
+            _animInterval = LevelSettings.Inst.PlayerStatsSettings.TimeBetweenKiсks;
             _animTime = _animInterval;
         }
 

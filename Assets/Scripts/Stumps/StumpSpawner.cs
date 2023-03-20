@@ -2,11 +2,14 @@
 using Assets.Scripts.Pooling;
 using Assets.Scripts.Settings;
 using Assets.Scripts.Trees;
-using System.Collections;
 using UnityEngine;
 
 namespace Assets.Scripts.Stumps
 {
+    /// <summary>
+    /// Спавнер пней, который слушает события вырубки деревьев и 
+    /// устанавливает в то место пень
+    /// </summary>
     public class StumpSpawner : MonoBehaviour
     {
         [SerializeField] private Stump stumpPrefab;

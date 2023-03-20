@@ -3,21 +3,24 @@ using UnityEngine;
 
 namespace Assets.Scripts.Player
 {
+    /// <summary>
+    /// Класс управления эффектами, связанных с персонажем игрока
+    /// </summary>
     public class PlayerEffects : MonoBehaviour
     {
         [SerializeField] private ParticleSystem levelUpPS;
 
         private void OnEnable()
         {
-            EventMaster.AddListener<int>(EventStrings.LEVEL_UP, PlayAxeAnim);
+            EventMaster.AddListener<int>(EventStrings.LEVEL_UP, PlayLevelUpAnimation);
         }
 
         private void OnDisable()
         {
-            EventMaster.RemoveListener<int>(EventStrings.LEVEL_UP, PlayAxeAnim);
+            EventMaster.RemoveListener<int>(EventStrings.LEVEL_UP, PlayLevelUpAnimation);
         }
 
-        private void PlayAxeAnim(int level)
+        private void PlayLevelUpAnimation(int level)
         {
             if (level != 1)
             {

@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace Assets.Scripts.Trees
 {
+    /// <summary>
+    /// Класс, отвечающий за лут, получаемый при срубке дерева.
+    /// </summary>
     public class TreeLootThrower : MonoBehaviour
     {
         [field: SerializeField] public int WoodCount { get; set; } = 2;

@@ -1,5 +1,8 @@
 ﻿namespace Assets.Scripts.Core
 {
+    /// <summary>
+    /// Контейнер всех констант для обращения к полям аниматора
+    /// </summary>
     public static class AnimatorStrings
     {
         public const string KICK = "Kick";

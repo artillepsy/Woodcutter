@@ -3,6 +3,10 @@ using UnityEngine;
 
 namespace Assets.Scripts.Player
 {
+    /// <summary>
+    /// Класс для управления анимациями игрока через 
+    /// установку полей аниматора
+    /// </summary>
     public class PlayerAnimation : MonoBehaviour
     {
         [SerializeField] private Animator animator;

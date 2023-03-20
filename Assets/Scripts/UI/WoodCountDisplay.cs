@@ -5,6 +5,11 @@ using UnityEngine.UI;
 
 namespace Assets.Scripts.UI
 {
+    /// <summary>
+    /// Отображает дерево для поднятия уровня.
+    /// Обновляется при срубке дерева и поднятия уровня
+    /// Проигрывает соответствующие анимации
+    /// </summary>
     public class WoodCountDisplay : MonoBehaviour
     {
         [SerializeField] private Animation woodStatsAnimation;

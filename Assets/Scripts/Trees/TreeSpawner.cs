@@ -7,6 +7,10 @@ using UnityEngine;
 
 namespace Assets.Scripts.Trees
 {
+    /// <summary>
+    /// Спавнер деревьев. При старте сцены заполняет 
+    /// участок игрового поля деревьями 
+    /// </summary>
     public class TreeSpawner : MonoBehaviour
     {
         [SerializeField] private GridData gridData;
@@ -31,6 +35,9 @@ namespace Assets.Scripts.Trees
             SpawnTrees();
         }
 
+        /// <summary>
+        /// Метод спавна деревьев в пределах сетки в начале уровня
+        /// </summary>
         private void SpawnTrees()
         {
             var settings = LevelSettings.Inst.TreeSettings;
@@ -46,6 +53,9 @@ namespace Assets.Scripts.Trees
             }
         }
 
+        /// <summary>
+        /// Метод, спавнящий дерево на месте пня
+        /// </summary>
         private void RespawnTree(Stump stump)
         {
             var inst = Pool.Get(stump.TreeID) as TreeObject;
@@ -55,6 +65,9 @@ namespace Assets.Scripts.Trees
             inst.StartGrow(0f);
         }
 
+        /// <summary>
+        /// Спавн дерева 
+        /// </summary>
         private void SpawnTree(Vector3 spawnPoint, float growDelay, TreeObject prefab)
         {
             var instance = Pool.Get(prefab.ID) as TreeObject;
@@ -63,6 +76,10 @@ namespace Assets.Scripts.Trees
             instance.StartGrow(growDelay);
         }
 
+        /// <summary>
+        /// Берёт точки из списка и убирает их оттуда для исключения повтора
+        /// позиции при спавне
+        /// </summary>
         private Vector3 GetSpawnPointWithExclude(List<Vector3> spawnPoints)
         {
             if (spawnPoints.Count == 0)

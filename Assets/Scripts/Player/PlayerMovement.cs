@@ -3,6 +3,10 @@ using UnityEngine;
 
 namespace Assets.Scripts.Player
 {
+    /// <summary>
+    /// класс движения игрока. Движение происходит при помощи обработки
+    /// ивентов от движения джойстика
+    /// </summary>
     public class PlayerMovement : MonoBehaviour
     {
         [SerializeField] private float speed = 3f;
@@ -30,6 +34,9 @@ namespace Assets.Scripts.Player
             _direction = new Vector3(joystickData.x, 0, joystickData.y).normalized;
         }
 
+        /// <summary>
+        /// Сначала персонаж меняет свое направление, а уже потом движется в его сторону
+        /// </summary>
         private void FixedUpdate()
         {
             if (_direction == Vector3.zero)

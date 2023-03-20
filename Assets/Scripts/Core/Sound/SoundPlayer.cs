@@ -7,6 +7,9 @@ using UnityEditor;
 
 namespace Assets.Scripts.Core.Sound
 {
+    /// <summary>
+    /// Класс проигрывания всех звуков на сцене в 2D и 3D пространстве
+    /// </summary>
     public class SoundPlayer : MonoBehaviour
     {
         [SerializeField] private AudioSource audioSource;
@@ -23,9 +26,12 @@ namespace Assets.Scripts.Core.Sound
         [SerializeField, Min(0)] private float maxFadeRadius = 30f;
         [Space]
         [SerializeField] private float playStepsSoundInterval = 0.3f;
-        private Vector2 _joystickData;
         private float _timeSinceLastStepSound = 0f;
+        private Vector2 _joystickData;
 
+        /// <summary>
+        /// Подписка на все события-триггеры для звуков
+        /// </summary>
         private void OnEnable()
         {
             EventMaster.AddListener(EventStrings.TREE_KICKED, () => PlayOnce(treeKickAudios));
@@ -37,6 +43,9 @@ namespace Assets.Scripts.Core.Sound
                 (tree) => PlayOnce(treeGrowAudios, tree.transform.position));
         }
 
+        /// <summary>
+        /// отписка от этих событий
+        /// </summary>
         private void OnDisable()
         {
             EventMaster.RemoveListener(EventStrings.TREE_KICKED, () => PlayOnce(treeKickAudios));
@@ -48,6 +57,9 @@ namespace Assets.Scripts.Core.Sound
                 (tree) => PlayOnce(treeGrowAudios, tree.transform.position));
         }
 
+        /// <summary>
+        /// Проигрывание звука шагов во время ходьбы
+        /// </summary>
         private void Update()
         {
             if (_joystickData == Vector2.zero)
@@ -82,6 +94,12 @@ namespace Assets.Scripts.Core.Sound
             PlayOnce(binding);
         }
 
+        /// <summary>
+        /// Проигрывание звука в 3D пространстве в 
+        /// зависимости от удалённости объекта от игрока
+        /// </summary>
+        /// <param name="binding"></param>
+        /// <param name="pos"></param>
         private void PlayOnce(AudioClipBinding binding, Vector3 pos)
         {
             var volume = GetInfluencedVolume(pos, binding.Volume);
@@ -105,6 +123,9 @@ namespace Assets.Scripts.Core.Sound
             PlayOnce(binding, pos);
         }
 
+        /// <summary>
+        /// Рассчёт расстояния а настройка звука
+        /// </summary>
         private float GetInfluencedVolume(Vector3 pos, float startValue)
         {
             var distance = Vector3.Distance(pos, player.position);
@@ -139,6 +160,9 @@ namespace Assets.Scripts.Core.Sound
 #endif
     }
 
+    /// <summary>
+    /// Класс-контейнер звуков и их громкости для удобной настройки в инспекторе
+    /// </summary>
     [System.Serializable]
     public class AudioClipBinding
     {

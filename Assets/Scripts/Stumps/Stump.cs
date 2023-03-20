@@ -6,6 +6,11 @@ using UnityEngine;
 
 namespace Assets.Scripts.Stumps
 {
+    /// <summary>
+    /// Пень, появляющийся после срубки дерева и 
+    /// вызывающий через промежуток времени ивент для респавна дерева.
+    /// Автоматически убирает себя в пул объектов.
+    /// </summary>
     public class Stump : PoolableMonoBehaviour
     {
         public int TreeID { get; private set; }

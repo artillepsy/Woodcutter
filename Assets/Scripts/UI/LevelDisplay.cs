@@ -4,6 +4,10 @@ using UnityEngine.UI;
 
 namespace Assets.Scripts.Core
 {
+    /// <summary>
+    /// Отображает уровень игрока над персонажем.
+    /// Содержит в себе кнопку повышения уровня и проигрывает соответствующие анимации
+    /// </summary>
     public class LevelDisplay : MonoBehaviour
     {
         [SerializeField] private Animation levelLabelAnimation;
@@ -35,11 +39,17 @@ namespace Assets.Scripts.Core
             DeactivateButton();
         }
 
+        /// <summary>
+        /// Присваивание позиции счетчика уровня к позиции игрока
+        /// </summary>
         private void LateUpdate()
         {
             levelLabel.transform.position = _cam.WorldToScreenPoint(player.position);
         }
 
+        /// <summary>
+        /// ПРоигрывает анимацию счетчика после повышения уровня
+        /// </summary>
         private void PlayLabelAnimation(int level)
         {
             if (level != 1)
@@ -48,6 +58,10 @@ namespace Assets.Scripts.Core
             }
         }
 
+        /// <summary>
+        /// ПРи нажатии на кнопку уровень повышается взамен
+        /// нужному количеству дерева для него
+        /// </summary>
         public void OnClickLevelUp()
         {
             buttonAnimator.SetTrigger(AnimatorStrings.PRESSED);
@@ -67,6 +81,10 @@ namespace Assets.Scripts.Core
             button.gameObject.SetActive(false);
         }
 
+        /// <summary>
+        /// Кнопка поднятия уровня появляется, если дерева
+        /// хватает для повышения
+        /// </summary>
         private void SetActiveButton()
         {
             CancelInvoke();

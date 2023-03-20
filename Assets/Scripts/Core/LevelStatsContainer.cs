@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace Assets.Scripts.Core
 {
+    /// <summary>
+    /// класс, содержащий ключевые данные для уровня
+    /// </summary>
     public class LevelStatsContainer : MonoBehaviour
     {
         [SerializeField] private WoodCountDisplay woodDisplay;
@@ -25,6 +28,10 @@ namespace Assets.Scripts.Core
             EventMaster.RemoveListener(EventStrings.LEVEL_UP_REQUEST, UpdateLevel);
         }
 
+        /// <summary>
+        /// Во время дроба подсчитывает количество дерева и вызывает соответствующий ивент.
+        /// Также обновляет UI отображения дерева
+        /// </summary>
         private void AddWoodCount(int count)
         {
             WoodCount += count;
@@ -43,6 +50,9 @@ namespace Assets.Scripts.Core
             woodDisplay.UpdateWoodCount(WoodCount, _needWoodCount);
         }
 
+        /// <summary>
+        /// Вызывает ивент обновлемя уровня персонажа
+        /// </summary>
         private void UpdateLevel()
         {
             WoodCount -= _needWoodCount;

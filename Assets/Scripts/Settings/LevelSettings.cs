@@ -1,8 +1,10 @@
-﻿using Assets.Scripts.Core;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Scripts.Settings
 {
+    /// <summary>
+    /// Конейнер настроек уровня, запускающий инициализацию параметров этих настроек
+    /// </summary>
     public class LevelSettings : MonoBehaviour
     {
         public static LevelSettings Inst { get; private set; }

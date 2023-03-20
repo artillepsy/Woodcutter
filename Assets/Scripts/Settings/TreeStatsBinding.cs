@@ -6,6 +6,10 @@ using System.Collections.Generic;
 
 namespace Assets.Scripts.Settings
 {
+    /// <summary>
+    /// Контейнер настроек дерева для удобной нстройки 
+    /// в инспекторе
+    /// </summary>
     [Serializable]
     public class TreeStatsBinding
     {
@@ -20,6 +24,12 @@ namespace Assets.Scripts.Settings
             Prefab.LootThrower.WoodCount = LootCount;
         }
 
+        /// <summary>
+        /// Получает префаб объекта в зависимости от вероятности выпадения.
+        /// Учитывает вероятность выпадения каждого префаба в списке
+        /// </summary>
+        /// <param name="prefabs"></param>
+        /// <returns></returns>
         public static TreeObject GetPrefabByProb(List<TreeStatsBinding> prefabs)
         {
             var total = 0f;

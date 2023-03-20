@@ -8,6 +8,10 @@ using UnityEditor;
 
 namespace Assets.Scripts.Player
 {
+    /// <summary>
+    /// Компонент, который ищет ближайшее дерево к игроку и 
+    /// кеширует ссылку на него.
+    /// </summary>
     public class PlayerTreeSearcher : MonoBehaviour
     {
         [SerializeField] private float searchRadius = 3f;
@@ -71,6 +75,5 @@ namespace Assets.Scripts.Player
             Handles.DrawSolidDisc(transform.position + Vector3.up * 0.1f, Vector3.up, searchRadius);
         }
 #endif
-
     }
 }
