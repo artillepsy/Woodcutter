@@ -87,7 +87,7 @@ ParticleSystem:
   m_GameObject: {fileID: 1365592621180967173}
   serializedVersion: 7
   lengthInSec: 0.05
-  simulationSpeed: 1.7
+  simulationSpeed: 0.83
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
@@ -161,7 +161,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2.11
+      scalar: 1.74
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -215,7 +215,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 3
       scalar: 9.31
-      minScalar: 5.27
+      minScalar: 8.9
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -267,8 +267,8 @@ ParticleSystem:
     startColor:
       serializedVersion: 2
       minMaxState: 2
-      minColor: {r: 0.32937583, g: 0.4056604, b: 0.19670703, a: 1}
-      maxColor: {r: 0.23623565, g: 0.2924528, b: 0.13629404, a: 1}
+      minColor: {r: 0.55371934, g: 0.764151, b: 0.1758989, a: 1}
+      maxColor: {r: 0.49012902, g: 0.6037736, b: 0.30416518, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -330,8 +330,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.28
-      minScalar: 0.18
+      scalar: 0.18
+      minScalar: 0.08
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1021,7 +1021,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 30.21
+        scalar: 30
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -2727,7 +2727,7 @@ ParticleSystem:
     inWorldSpace: 0
     multiplyDragByParticleSize: 1
     multiplyDragByParticleVelocity: 1
-    dampen: 0.17
+    dampen: 0.16
     drag:
       serializedVersion: 2
       minMaxState: 0
